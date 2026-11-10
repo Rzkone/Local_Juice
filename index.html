@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F9F8F6">
+<title>Local Juice — Segar, Tenang, Dipress Dingin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  window.tailwind = window.tailwind || {};
+  tailwind.config = {
+    theme: { extend: {
+      colors: {
+        ivory: '#F9F8F6', ink: '#2D3748',
+        sage: { DEFAULT:'#4A7C59', 50:'#F0F5F1', 100:'#E2EDE5', 200:'#C5DBCB', 600:'#3E6A4C', 700:'#325640' },
+        peach:'#FBE3D3', butter:'#FFF1C9', blush:'#F8DCE5', lilac:'#E7DDF3', mint:'#DDEFE2'
+      },
+      fontFamily: { sans:['"Plus Jakarta Sans"','system-ui','sans-serif'], display:['Fraunces','Georgia','serif'] }
+    } }
+  };
+</script>
+<style>
+  /* =====================================================================
+     LOCAL JUICE — Calm Light & Eco-Minimalist tokens
+     ivory #F9F8F6 · ink #2D3748 · sage #4A7C59
+     ===================================================================== */
+  html { scroll-behavior: smooth; }
+  body { font-family:'Plus Jakarta Sans',system-ui,sans-serif; background:#F9F8F6; color:#2D3748; -webkit-font-smoothing:antialiased; }
+  .font-display { font-family:'Fraunces',Georgia,serif; }
+  section[id] { scroll-margin-top: 7.5rem; }
+
+  .card { background:#fff; border:1px solid #ECE9E3; border-radius:1.25rem; box-shadow:0 1px 2px rgba(45,55,72,.04), 0 10px 28px -16px rgba(45,55,72,.14); }
+  .chip-sm { display:inline-block; font-size:.68rem; font-weight:600; padding:.2rem .55rem; border-radius:999px; background:rgba(255,255,255,.75); color:#2D3748; }
+  .chip { display:inline-flex; align-items:center; gap:.4rem; padding:.45rem .9rem; border-radius:999px; font-size:.82rem; font-weight:600; background:#fff; border:1.5px solid #E7E3DC; color:#2D3748; transition:.2s; cursor:pointer; white-space:nowrap; }
+  .chip:hover { border-color:#4A7C59; }
+  .chip.on { background:#4A7C59; border-color:#4A7C59; color:#fff; }
+
+  .btn-primary { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; background:#4A7C59; color:#fff; font-weight:600; border-radius:999px; padding:.75rem 1.3rem; transition:.2s; box-shadow:0 6px 16px -8px rgba(74,124,89,.7); }
+  .btn-primary:hover { background:#3E6A4C; transform:translateY(-1px); }
+  .btn-primary:active { transform:translateY(0); }
+  .btn-primary:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+  .btn-ghost { display:inline-flex; align-items:center; justify-content:center; gap:.4rem; border:1.5px solid #D9D5CD; background:#fff; color:#2D3748; font-weight:600; border-radius:999px; padding:.6rem 1.1rem; transition:.2s; font-size:.875rem; }
+  .btn-ghost:hover { border-color:#4A7C59; color:#4A7C59; }
+  .btn-sm { padding:.4rem .8rem; font-size:.78rem; }
+  .icon-btn { width:2.25rem; height:2.25rem; border-radius:999px; display:inline-grid; place-items:center; background:#fff; border:1.5px solid #E1DDD5; transition:.2s; }
+  .icon-btn:hover { border-color:#4A7C59; color:#4A7C59; }
+
+  .field { width:100%; border:1.5px solid #E1DDD5; background:#fff; border-radius:.85rem; padding:.62rem .8rem; font-size:.9rem; outline:none; transition:.2s; color:#2D3748; }
+  .field:focus { border-color:#4A7C59; box-shadow:0 0 0 3px rgba(74,124,89,.14); }
+  .field::placeholder { color:#A0A8B4; }
+  .lbl { display:block; font-size:.74rem; font-weight:600; color:#5B6575; margin-bottom:.3rem; }
+
+  .opt { border:1.5px solid #E7E3DC; border-radius:.9rem; padding:.6rem .75rem; background:#fff; transition:.2s; cursor:pointer; text-align:left; }
+  .opt:hover { border-color:#4A7C59; }
+  .opt.active { border-color:#4A7C59; background:#EEF4EF; box-shadow:0 0 0 3px rgba(74,124,89,.12); }
+
+  .seg { display:inline-flex; background:#EFECE6; border-radius:999px; padding:3px; }
+  .seg button { padding:.36rem .85rem; border-radius:999px; font-size:.78rem; font-weight:600; color:#5B6575; transition:.2s; white-space:nowrap; }
+  .seg button.on { background:#fff; color:#4A7C59; box-shadow:0 1px 4px rgba(45,55,72,.12); }
+  .seg.big button { padding:.6rem 1.2rem; font-size:.9rem; }
+
+  /* status dot */
+  .status-dot { width:.55rem; height:.55rem; border-radius:999px; display:inline-block; background:#C9A15B; }
+  .status-dot.on { background:#4A7C59; animation:pulseDot 1.8s infinite; }
+  @keyframes pulseDot { 0%{box-shadow:0 0 0 0 rgba(74,124,89,.5)} 70%{box-shadow:0 0 0 7px rgba(74,124,89,0)} 100%{box-shadow:0 0 0 0 rgba(74,124,89,0)} }
+
+  /* ticker */
+  #tickerText { transition:opacity .25s, transform .25s; display:inline-block; }
+  #tickerText.out { opacity:0; transform:translateY(6px); }
+
+  /* product cards */
+  .pcard { animation:fadeUp .45s both; }
+  @keyframes fadeUp { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none} }
+  @keyframes popIn { 0%{transform:scale(.6); opacity:0} 70%{transform:scale(1.08)} 100%{transform:scale(1); opacity:1} }
+  .pop { animation:popIn .5s both; }
+
+  /* overlays */
+  .overlay { position:fixed; inset:0; z-index:60; display:none; align-items:flex-end; justify-content:center; background:rgba(45,55,72,.32); backdrop-filter:blur(3px); }
+  .overlay.open { display:flex; }
+  @media (min-width:640px){ .overlay { align-items:center; padding:1.5rem; } }
+  .panel { width:100%; max-height:94vh; overflow-y:auto; background:#F9F8F6; border-radius:1.6rem 1.6rem 0 0; animation:slideUp .35s cubic-bezier(.22,1,.36,1); }
+  @media (min-width:640px){ .panel { border-radius:1.6rem; max-width:56rem; } }
+  @keyframes slideUp { from{transform:translateY(40px); opacity:0} to{transform:none; opacity:1} }
+
+  #cartOverlay { position:fixed; inset:0; z-index:55; background:rgba(45,55,72,.32); backdrop-filter:blur(3px); opacity:0; pointer-events:none; transition:opacity .3s; }
+  #cartOverlay.open { opacity:1; pointer-events:auto; }
+  #cartDrawer { position:fixed; top:0; right:0; height:100%; width:100%; max-width:27.5rem; z-index:56; background:#F9F8F6; transform:translateX(100%); transition:transform .38s cubic-bezier(.22,1,.36,1); display:flex; flex-direction:column; box-shadow:-20px 0 50px -30px rgba(0,0,0,.35); }
+  #cartDrawer.open { transform:none; }
+
+  /* bottle */
+  .liquid { transition:transform 1.4s cubic-bezier(.22,1,.36,1); }
+  .wave { animation:waveMove 3s linear infinite; }
+  @keyframes waveMove { from{transform:translateX(0)} to{transform:translateX(30px)} }
+  .mini-b { transition:.4s; }
+
+  /* bars */
+  .bar { transition:width .6s cubic-bezier(.22,1,.36,1); }
+
+  /* timeline */
+  .tl { position:relative; margin:0; padding:0; list-style:none; }
+  .tl li { position:relative; padding:0 0 1.3rem 3rem; min-height:2.2rem; }
+  .tl li:last-child { padding-bottom:0; }
+  .tl li::before { content:''; position:absolute; left:calc(1rem - 1px); top:2.1rem; bottom:.1rem; width:2px; background:#E4E0D8; }
+  .tl li:last-child::before { display:none; }
+  .tl li.done::before { background:#4A7C59; }
+  .tl .dot { position:absolute; left:0; top:0; width:2rem; height:2rem; border-radius:999px; display:grid; place-items:center; background:#fff; border:2px solid #D8D3CA; color:#9AA3AF; font-size:.8rem; font-weight:700; transition:.3s; }
+  .tl li.done .dot { background:#4A7C59; border-color:#4A7C59; color:#fff; }
+  .tl li.now .dot { border-color:#4A7C59; color:#4A7C59; animation:pulseRing 1.6s infinite; }
+  @keyframes pulseRing { 0%{box-shadow:0 0 0 0 rgba(74,124,89,.4)} 80%,100%{box-shadow:0 0 0 11px rgba(74,124,89,0)} }
+  .tl li.todo { opacity:.55; }
+
+  .toast { animation:fadeUp .3s both; }
+  .ticket { position:relative; }
+  .ticket::before, .ticket::after { content:''; position:absolute; top:50%; width:14px; height:14px; border-radius:999px; background:#F9F8F6; border:1px solid #ECE9E3; transform:translateY(-50%); }
+  .ticket::before { left:-8px; } .ticket::after { right:-8px; }
+  .noscroll { overflow:hidden; }
+  .hero-blob { position:absolute; border-radius:999px; filter:blur(.2px); }
+  @keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  .floaty { animation:floaty 5s ease-in-out infinite; }
+  button { cursor:pointer; } button:focus-visible, a:focus-visible, select:focus-visible { outline:2px solid #4A7C59; outline-offset:2px; }
+
+  /* print: hanya label botol */
+  @media print {
+    body.printing-labels > *:not(#labelModal) { display:none !important; }
+    body.printing-labels #labelModal { position:static !important; display:block !important; background:none !important; backdrop-filter:none !important; padding:0 !important; }
+    body.printing-labels #labelModal .panel { max-height:none !important; box-shadow:none !important; background:#fff !important; animation:none !important; }
+    .no-print { display:none !important; }
+    .label-item { break-inside:avoid; page-break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+<a id="top"></a>
+
+<!-- ============================ SHOP VIEW ============================ -->
+<div id="shopView" class="pb-24 md:pb-0">
+  <!-- Live Juice Bar Ticker -->
+  <div class="bg-sage-100 text-sage-700 text-xs">
+    <div class="max-w-6xl mx-auto px-4 h-8 flex items-center gap-3 overflow-hidden">
+      <span class="flex items-center gap-1.5 font-bold tracking-wider text-[10px] shrink-0"><span class="status-dot on"></span>LIVE JUICE BAR</span>
+      <span id="tickerText" class="truncate min-w-0 font-medium" aria-live="polite"></span>
+    </div>
+  </div>
+
+  <header class="sticky top-0 z-30 bg-ivory/90 backdrop-blur border-b border-[#ECE9E3]">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center gap-3">
+      <a href="#top" class="flex items-center gap-2 shrink-0">
+        <span class="w-8 h-8 rounded-full bg-sage text-white grid place-items-center"><i data-ic="leaf" data-cls="w-4 h-4"></i></span>
+        <span class="font-display text-xl font-semibold tracking-tight">Local Juice</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-5 ml-6 text-sm font-medium text-ink/70">
+        <button data-action="go" data-to="catalog" class="hover:text-sage">Menu</button>
+        <button data-action="go" data-to="promo" class="hover:text-sage">Promo</button>
+        <button data-action="go" data-to="loyalty" class="hover:text-sage">Loyalty</button>
+        <button data-action="go" data-to="tracking" class="hover:text-sage">Lacak Pesanan</button>
+      </nav>
+      <div class="ml-auto flex items-center gap-2">
+        <div id="userToggle" class="seg" role="group" aria-label="Status pelanggan">
+          <button data-action="set-user" data-type="guest">Guest</button>
+          <button data-action="set-user" data-type="member">Member VIP</button>
+        </div>
+        <button data-action="open-cart" class="relative icon-btn" aria-label="Buka keranjang">
+          <i data-ic="bag"></i>
+          <span id="cartBadge" class="hidden absolute -top-1 -right-1 min-w-[1.1rem] h-[1.1rem] px-1 rounded-full bg-sage text-white text-[10px] font-bold grid place-items-center">0</span>
+        </button>
+      </div>
+    </div>
+    <div class="max-w-6xl mx-auto px-4 pb-2 -mt-0.5 flex items-center justify-between gap-3 text-xs" id="storeStatus"></div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4">
+    <!-- HERO -->
+    <section class="pt-8 pb-8 md:pt-14 md:pb-12 grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <span class="chip !cursor-default"><span>🌿</span> Dipress dingin · bahan petani lokal</span>
+        <h1 class="font-display text-[2.4rem] md:text-6xl leading-[1.05] font-semibold mt-4">Segar yang <span class="text-sage">menenangkan</span>, langsung dari kebun lokal.</h1>
+        <p class="mt-4 text-ink/65 max-w-md leading-relaxed">Jus cold-pressed, smoothies, healthy shots, dan wellness bowls. Kustomisasi sesuka hati, pantau nutrisinya secara langsung, lalu ambil atau antar ke rumah.</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <button data-action="go" data-to="catalog" class="btn-primary">Mulai pesan <i data-ic="arrow" data-cls="w-4 h-4"></i></button>
+          <button data-action="go" data-to="promo" class="btn-ghost">Lihat promo</button>
+        </div>
+        <dl class="mt-8 grid grid-cols-3 gap-4 max-w-md text-sm">
+          <div><dt class="text-ink/50 text-xs">Tanpa pemanasan</dt><dd class="font-semibold">100% cold-pressed</dd></div>
+          <div><dt class="text-ink/50 text-xs">Tanpa pengawet</dt><dd class="font-semibold">Segar 24 jam</dd></div>
+          <div><dt class="text-ink/50 text-xs">Kemasan</dt><dd class="font-semibold">Botol kaca</dd></div>
+        </dl>
+      </div>
+      <div class="relative h-72 md:h-96" id="heroArt" aria-hidden="true"></div>
+    </section>
+
+    <!-- ORDER MODE -->
+    <section id="ordermode" class="mb-10"></section>
+
+    <!-- PROMO: flash bundle + voucher -->
+    <section id="promo" class="mb-12"></section>
+
+    <!-- CATALOG -->
+    <section id="catalog" class="mb-14"></section>
+
+    <!-- LOYALTY -->
+    <section id="loyalty" class="mb-14"></section>
+
+    <!-- TRACKING -->
+    <section id="tracking" class="mb-16"></section>
+  </main>
+
+  <footer class="border-t border-[#ECE9E3] bg-white/60">
+    <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row md:items-center justify-between gap-4 text-sm text-ink/60">
+      <div>
+        <div class="font-display text-lg text-ink font-semibold">Local Juice</div>
+        <p class="text-xs mt-1">Estimasi nutrisi bersifat perkiraan dan bukan klaim medis. Transaksi pada demo ini adalah simulasi.</p>
+      </div>
+      <div class="flex items-center gap-3 text-xs">
+        <span>© 2026 Local Juice · Dibuat dengan buah lokal 🌱</span>
+        <!-- Tombol tersembunyi: beralih ke Barista POS View -->
+        <button data-action="open-pos" class="opacity-20 hover:opacity-80 focus:opacity-80 transition w-7 h-7 rounded-full grid place-items-center border border-transparent hover:border-sage-200" aria-label="Barista POS (staf)" title="Barista POS"><i data-ic="leaf" data-cls="w-3.5 h-3.5"></i></button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bottom nav (mobile) -->
+  <nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur border-t border-[#ECE9E3]" style="padding-bottom:env(safe-area-inset-bottom)">
+    <div class="grid grid-cols-5 text-[10.5px] font-semibold text-ink/55">
+      <button data-action="go" data-to="catalog" class="py-2 flex flex-col items-center gap-0.5 hover:text-sage"><i data-ic="grid"></i>Menu</button>
+      <button data-action="go" data-to="promo" class="py-2 flex flex-col items-center gap-0.5 hover:text-sage"><i data-ic="tag"></i>Promo</button>
+      <button data-action="go" data-to="loyalty" class="py-2 flex flex-col items-center gap-0.5 hover:text-sage"><i data-ic="star"></i>Loyalty</button>
+      <button data-action="go" data-to="tracking" class="py-2 flex flex-col items-center gap-0.5 hover:text-sage"><i data-ic="clock"></i>Lacak</button>
+      <button data-action="open-cart" class="py-2 flex flex-col items-center gap-0.5 text-sage relative"><i data-ic="bag"></i>Keranjang
+        <span id="navCartBadge" class="hidden absolute top-1 left-1/2 ml-1 min-w-[1rem] h-4 px-1 rounded-full bg-sage text-white text-[9px] font-bold grid place-items-center">0</span>
+      </button>
+    </div>
+  </nav>
+</div>
+
+<!-- ============================ BARISTA POS VIEW ============================ -->
+<div id="posView" class="hidden min-h-screen"></div>
+
+<!-- ============================ CART DRAWER ============================ -->
+<div id="cartOverlay" data-action="close-cart"></div>
+<aside id="cartDrawer" aria-label="Keranjang">
+  <div class="flex items-center justify-between px-5 h-16 border-b border-[#ECE9E3] bg-white/70 shrink-0">
+    <div class="font-display text-xl font-semibold">Keranjang</div>
+    <div class="flex items-center gap-2">
+      <button data-action="cart-clear" class="text-xs text-ink/50 hover:text-red-500 font-semibold">Kosongkan</button>
+      <button data-action="close-cart" class="icon-btn" aria-label="Tutup keranjang"><i data-ic="x" data-cls="w-4 h-4"></i></button>
+    </div>
+  </div>
+  <div id="cartBody" class="flex-1 overflow-y-auto px-5 py-4 space-y-4"></div>
+  <div id="cartFoot" class="shrink-0 border-t border-[#ECE9E3] bg-white px-5 py-4"></div>
+</aside>
+
+<!-- ============================ PRODUCT MODAL ============================ -->
+<div id="productModal" class="overlay" role="dialog" aria-modal="true" aria-label="Kustomisasi produk">
+  <div class="panel" id="modalBody"></div>
+</div>
+
+<!-- ============================ LABEL MODAL ============================ -->
+<div id="labelModal" class="overlay" role="dialog" aria-modal="true" aria-label="Cetak label botol">
+  <div class="panel !max-w-3xl" id="labelBody"></div>
+</div>
+
+<div id="toasts" class="fixed z-[80] left-1/2 -translate-x-1/2 bottom-24 md:bottom-8 w-[92%] max-w-sm space-y-2 pointer-events-none"></div>
+
+<script>
+(() => {
+'use strict';
+
+/* =====================================================================
+   0. UTILITIES
+   ===================================================================== */
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const rp  = n => (n < 0 ? '−' : '') + 'Rp ' + Math.abs(Math.round(n)).toLocaleString('id-ID');
+const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
+const pad = n => String(n).padStart(2, '0');
+const hm  = ts => { const d = new Date(ts); return pad(d.getHours()) + ':' + pad(d.getMinutes()); };
+const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+const fmt1 = n => (Math.round(n * 10) / 10).toLocaleString('id-ID');
+
+const ICON = {
+  bag:'<path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>', minus:'<path d="M5 12h14"/>',
+  trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
+  check:'<path d="M5 13l4 4L19 7"/>', x:'<path d="M6 6l12 12M18 6L6 18"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  pin:'<path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+  bike:'<circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17l4-8h5l3 8M10 9L8 6H6M13 13h4"/>',
+  store:'<path d="M4 9l1-5h14l1 5M4 9v11h16V9M4 9a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0A2.7 2.7 0 0 0 20 9M9 20v-6h6v6"/>',
+  tag:'<path d="M3 12V4h8l10 10-8 8L3 12z"/><circle cx="7.5" cy="8.5" r="1.2"/>',
+  gift:'<rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M5 12v9h14v-9M12 8c-2-4-6-3-5 0 .6 1.6 5 0 5 0zM12 8c2-4 6-3 5 0-.6 1.6-5 0-5 0z"/>',
+  print:'<path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M7 14h10v7H7z"/>',
+  bolt:'<path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/>',
+  leaf:'<path d="M5 19C5 10 10 4 20 4c0 10-6 15-15 15z"/><path d="M5 19c3-5 6-8 10-10"/>',
+  star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3z"/>',
+  grid:'<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>',
+  arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+  back:'<path d="M19 12H5M11 6l-6 6 6 6"/>',
+  shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/>',
+  play:'<path d="M7 5l12 7-12 7V5z"/>', pause:'<path d="M8 5v14M16 5v14"/>'
+};
+const ic = (n, cls = 'w-5 h-5') => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[n] || ''}</svg>`;
+
+/* =====================================================================
+   1. DATA MASTER
+   ===================================================================== */
+const CATS = [
+  { id:'cold',     label:'Cold-Pressed',   emoji:'🧊', tag:'Tanpa pemanasan' },
+  { id:'smoothie', label:'Smoothies',      emoji:'🥤', tag:'Creamy & kenyang' },
+  { id:'shot',     label:'Healthy Shots',  emoji:'🍋', tag:'Sekali teguk' },
+  { id:'bowl',     label:'Wellness Bowls', emoji:'🥣', tag:'Santapan penuh' }
+];
+const catLabel = id => (CATS.find(c => c.id === id) || {}).label || id;
+
+const P = (id, cat, name, emoji, bg, price, ing, desc, vitC, kcal, sugar, fiber, protein, benefits) =>
+  ({ id, cat, name, emoji, bg, price, ing, desc, vitC, kcal, sugar, fiber, protein, benefits });
+
+const PRODUCTS = [
+  P('green-glow','cold','Green Glow','🥬','#DDEBDD',42000,'Kale · apel hijau · timun · lemon','Hijau segar yang ringan dan bersih untuk memulai hari.',38,95,14,1.5,2,['Hidrasi & antioksidan','Detoks ringan']),
+  P('citrus-sun','cold','Citrus Sun','🍊','#FFE8C7',38000,'Jeruk · lemon · kunyit','Cerah dan asam-manis, penuh vitamin C alami.',85,110,19,1,1.5,['Dukung daya tahan tubuh','Kaya vitamin C']),
+  P('beet-boost','cold','Beet Boost','🍎','#F6D6E0',40000,'Bit · apel · jahe','Earthy-manis dengan hangat jahe di akhir.',14,120,20,2.5,2,['Dukung stamina','Bantu sirkulasi darah']),
+  P('pine-mint','cold','Pine Mint Cooler','🍍','#FFF3BF',39000,'Nanas · mint · timun','Dingin menyegarkan, bersahabat untuk pencernaan.',48,100,17,1.2,1,['Bantu pencernaan','Segar & ringan']),
+
+  P('berry-bliss','smoothie','Berry Bliss','🍓','#EBD9F2',46000,'Stroberi · blueberry · yogurt nabati','Creamy berry yang lembut dan kaya antioksidan.',58,190,22,4,5,['Antioksidan tinggi','Dukung kulit sehat']),
+  P('mango-sunrise','smoothie','Mango Sunrise','🥭','#FFE2B0',45000,'Mangga · jeruk · santan kelapa','Tropis manis dengan tekstur sutra.',72,210,28,3,3,['Vitamin A & C','Energi cepat']),
+  P('choco-banana','smoothie','Choco Banana Oat','🍌','#EADBC8',44000,'Pisang · kakao · oat','Rasa cokelat tanpa rasa bersalah, kenyang lebih lama.',9,260,24,5,7,['Energi tahan lama','Kenyang sehat']),
+  P('green-protein','smoothie','Green Protein','🥑','#D4E8D0',48000,'Bayam · pisang · alpukat','Hijau creamy dengan protein nabati.',24,240,15,6,9,['Protein nabati','Sumber zat besi']),
+
+  P('ginger-fire','shot','Ginger Fire Shot','🔥','#FFE6D2',18000,'Jahe · lemon · cabai','Hangat menyengat untuk membangunkan badan.',12,25,3,0.4,0.3,['Menghangatkan tubuh','Dukung daya tahan']),
+  P('turmeric-gold','shot','Turmeric Gold Shot','🌼','#FFE9A8',19000,'Kunyit · jeruk nipis · lada hitam','Emas cair yang menenangkan.',18,28,4,0.4,0.4,['Anti-inflamasi alami','Dukung pemulihan']),
+  P('immune-shield','shot','Immune Shield Shot','🛡️','#FFEBD6',20000,'Jeruk · jahe · kunyit · madu','Perlindungan sekali teguk dari vitamin C.',60,35,6,0.3,0.4,['Dukung imunitas','Kaya vitamin C']),
+  P('wheatgrass','shot','Wheatgrass Shot','🌱','#DCEFD6',21000,'Wheatgrass · apel','Klorofil segar yang bersih dan tajam.',6,20,3,0.6,0.8,['Sumber klorofil','Menyegarkan']),
+
+  P('acai-calm','bowl','Acai Calm Bowl','🫐','#E6D4F0',62000,'Açaí · granola · buah segar','Bowl ungu pekat dengan topping renyah.',22,380,26,8,8,['Antioksidan tinggi','Energi seimbang']),
+  P('pitaya-sunrise','bowl','Pitaya Sunrise Bowl','🥥','#FBD5E3',58000,'Buah naga · mangga · kelapa','Merah muda lembut, tropis dan ringan.',40,340,24,7,6,['Tinggi serat','Menyegarkan']),
+  P('green-goddess','bowl','Green Goddess Bowl','🥝','#D6EAD6',60000,'Bayam · kiwi · chia · granola','Hijau segar dengan tambahan omega-3.',70,360,18,10,10,['Vitamin C tinggi','Tinggi serat']),
+  P('peanut-power','bowl','Peanut Power Bowl','🥜','#F0E0CC',56000,'Pisang · selai kacang · oat','Bowl bertenaga untuk aktivitas padat.',8,450,20,8,16,['Protein tinggi','Energi tahan lama'])
+];
+
+const SIZES = {
+  cold:     [{id:'s',label:'250 ml',mult:.75,add:-7000},{id:'m',label:'350 ml',mult:1,add:0},{id:'l',label:'500 ml',mult:1.4,add:12000}],
+  smoothie: [{id:'s',label:'250 ml',mult:.75,add:-7000},{id:'m',label:'350 ml',mult:1,add:0},{id:'l',label:'500 ml',mult:1.4,add:12000}],
+  shot:     [{id:'s',label:'Single 60 ml',mult:1,add:0},{id:'m',label:'Double 120 ml',mult:2,add:16000}],
+  bowl:     [{id:'s',label:'Regular 300 g',mult:1,add:0},{id:'m',label:'Large 450 g',mult:1.45,add:16000}]
+};
+const defaultSize = cat => (cat === 'cold' || cat === 'smoothie') ? 'm' : 's';
+
+const SWEET = [
+  { id:'0',   label:'0%',   sub:'Tanpa tambahan', kcal:0,  sugar:0 },
+  { id:'25',  label:'25%',  sub:'Less sweet',     kcal:12, sugar:3 },
+  { id:'50',  label:'50%',  sub:'Seimbang',       kcal:24, sugar:6 },
+  { id:'100', label:'100%', sub:'Manis penuh',    kcal:48, sugar:12 }
+];
+
+const BOOSTERS = [
+  { id:'chia',      name:'Chia Seeds',     emoji:'🌾', price:4000, vitC:0, kcal:35, sugar:0, fiber:5,   protein:1.5, fn:'Omega-3 & serat, kenyang lebih lama' },
+  { id:'ginger',    name:'Ginger Extract', emoji:'🔥', price:3000, vitC:2, kcal:5,  sugar:0, fiber:.2,  protein:0,   fn:'Menghangatkan & bantu pencernaan' },
+  { id:'spirulina', name:'Spirulina',      emoji:'🌿', price:5000, vitC:1, kcal:20, sugar:0, fiber:.3,  protein:4,   fn:'Protein nabati & zat besi, boost energi' }
+];
+
+const BRANCHES = [
+  { id:'senopati',     name:'Local Juice Senopati',      addr:'Jl. Senopati No. 21, Jakarta Selatan',     km:1.2,  open:8,  close:21 },
+  { id:'kemang',       name:'Local Juice Kemang',        addr:'Jl. Kemang Raya No. 8, Jakarta Selatan',   km:4.6,  open:8,  close:22 },
+  { id:'bsd',          name:'Local Juice BSD',           addr:'The Breeze, BSD City, Tangerang Selatan',  km:17.3, open:9,  close:21 },
+  { id:'kelapagading', name:'Local Juice Kelapa Gading', addr:'Jl. Boulevard Raya, Jakarta Utara',        km:19.8, open:10, close:22 }
+];
+
+const ZONES = [
+  { id:'scbd',      label:'SCBD / Senopati',     km:1.5 },
+  { id:'kebayoran', label:'Kebayoran Baru',      km:3.2 },
+  { id:'kemang',    label:'Kemang',              km:4.8 },
+  { id:'tebet',     label:'Tebet',               km:6.5 },
+  { id:'cilandak',  label:'Cilandak',            km:7.9 },
+  { id:'pondok',    label:'Pondok Indah',        km:11  }
+];
+const shipFee = z => Math.round((7000 + Math.max(0, Math.ceil(z.km - 2)) * 2500) / 500) * 500;
+const shipEta = z => 18 + Math.round(z.km * 3);
+
+const VOUCHERS = [
+  { id:'FRESH10',  title:'Diskon 10%',        desc:'Maks. potongan Rp 20.000',      type:'percent',  value:10,    max:20000, min:60000,  tag:'Welcome' },
+  { id:'HEMAT15',  title:'Potongan Rp 15.000', desc:'Untuk semua menu',              type:'fixed',    value:15000,        min:100000, tag:'Hemat' },
+  { id:'ONGKIR',   title:'Gratis Ongkir',     desc:'Maks. Rp 15.000 · khusus Delivery', type:'shipping', value:15000,     min:50000,  tag:'Delivery' },
+  { id:'VIP20',    title:'VIP 20%',           desc:'Maks. potongan Rp 40.000',      type:'percent',  value:20,    max:40000, min:120000, tag:'Member VIP', memberOnly:true }
+];
+
+const BUNDLE = { name:'Rainbow Trio', need:3, off:18000, cat:'cold', items:['green-glow','citrus-sun','beet-boost'] };
+const POINT_VALUE = 50;      // 1 poin = Rp 50
+const POINT_EARN  = 1000;    // 1 poin per Rp 1.000
+const STAMP_GOAL  = 5;
+const STEP_MS     = 9000;    // simulasi: waktu antar tahap
+const AKG_VITC = 90, REF_KCAL = 500, REF_SUGAR = 50;
+
+const STEPS = [
+  { t:'Pesanan Diterima Kasir',        d:'Kasir mengonfirmasi dan mencatat pesananmu.' },
+  { t:'Buah Segar Dicuci & Dipotong',  d:'Buah & sayur lokal dicuci bersih, lalu dipotong.' },
+  { t:'Cold-Pressed & Bottled',        d:'Dipress dingin tanpa panas dan langsung dibotolkan.' },
+  { t:'Siap',                          d:'' }
+];
+const stepTitle = (o, i) => i === 3 ? (o.mode === 'delivery' ? 'Siap Dikirim' : 'Siap Diambil') : STEPS[i].t;
+const stepDesc  = (o, i) => i === 3 ? (o.mode === 'delivery' ? 'Kurir membawa pesananmu ke alamat tujuan.' : 'Sebutkan ID pesananmu di kasir untuk mengambil.') : STEPS[i].d;
+
+/* =====================================================================
+   2. STATE + PERSISTENCE
+   ===================================================================== */
+const LS_KEY = 'localjuice.v1';
+const defaultState = () => ({
+  userType: 'guest',
+  guest:  { stamps: 2 },
+  member: { name:'Sari Wulandari', points: 850, lifetime: 2150, history: [
+    { t: Date.now() - 864e5 * 6, label:'Pesanan LJ-1017', pts: 46 },
+    { t: Date.now() - 864e5 * 3, label:'Tukar poin LJ-1024', pts: -120 },
+    { t: Date.now() - 864e5 * 1, label:'Pesanan LJ-1031', pts: 38 }
+  ] },
+  cart: [], mode:'pickup', branch:'senopati', zone:'kebayoran',
+  addr: { full:'', landmark:'' }, customer: { name:'', phone:'' }, pay:'qris',
+  claimed: ['FRESH10'], voucherChoice:'auto', useReward:false, usePoints:false,
+  cat:'cold', orders: [], seq: 1040, autoSim: true
+});
+function loadState() {
+  const d = defaultState();
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return d;
+    const s = JSON.parse(raw);
+    return Object.assign(d, s, {
+      guest: Object.assign(d.guest, s.guest || {}),
+      member: Object.assign(d.member, s.member || {}),
+      addr: Object.assign(d.addr, s.addr || {}),
+      customer: Object.assign(d.customer, s.customer || {})
+    });
+  } catch (e) { return d; }
+}
+const state = loadState();
+const save = () => { try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) { /* storage tidak tersedia */ } };
+
+const ui = {
+  view: 'shop', modal: null, bottleLevel: 0,
+  tickerList: [
+    '🌱 Buah segar hari ini tiba pagi tadi dari kebun mitra',
+    '🧊 Cold-pressed batch pagi baru saja dibotolkan',
+    '⭐ Kumpulkan 5 stamp untuk 1 jus gratis',
+    '🚲 Delivery aktif untuk area Jakarta Selatan'
+  ],
+  tickerIdx: 0, simCounter: 0, simNext: rand(9, 14)
+};
+
+/* =====================================================================
+   3. PERHITUNGAN (NUTRISI, HARGA, KERANJANG)
+   ===================================================================== */
+function calcNutrients(p, o) {
+  const sz = SIZES[p.cat].find(s => s.id === o.size) || SIZES[p.cat][0];
+  const sw = SWEET.find(s => s.id === o.sweet) || SWEET[1];
+  const m = sz.mult;
+  const n = { vitC: p.vitC * m, kcal: (p.kcal + sw.kcal) * m, sugar: (p.sugar + sw.sugar) * m, fiber: p.fiber * m, protein: p.protein * m };
+  const fns = [...p.benefits];
+  o.boosters.forEach(id => {
+    const b = BOOSTERS.find(x => x.id === id); if (!b) return;
+    n.vitC += b.vitC; n.kcal += b.kcal; n.sugar += b.sugar; n.fiber += b.fiber; n.protein += b.protein; fns.push(b.fn);
+  });
+  if (sw.id === '0') fns.push('Tanpa gula tambahan');
+  if (n.vitC >= AKG_VITC) fns.push('≥100% kebutuhan vitamin C harian');
+  if (n.fiber >= 8) fns.push('Tinggi serat');
+  if (n.protein >= 10) fns.push('Tinggi protein');
+  if (n.sugar < 10) fns.push('Rendah gula');
+  n.fns = [...new Set(fns)].slice(0, 6);
+  const score = 55 + Math.min(20, n.vitC / AKG_VITC * 12) + Math.min(10, n.fiber * 1.2) + Math.min(10, n.protein)
+              - Math.max(0, (n.sugar - 15) * .8) + o.boosters.length * 2;
+  n.score = Math.round(clamp(score, 40, 98));
+  return n;
+}
+function unitPrice(p, o) {
+  const sz = SIZES[p.cat].find(s => s.id === o.size) || SIZES[p.cat][0];
+  return p.price + sz.add + o.boosters.reduce((a, id) => a + ((BOOSTERS.find(b => b.id === id) || {}).price || 0), 0);
+}
+function makeCartItem(p, m) {
+  const o = { size: m.size, sweet: m.sweet, boosters: [...m.boosters].sort() };
+  const n = calcNutrients(p, o);
+  const sz = SIZES[p.cat].find(s => s.id === o.size) || SIZES[p.cat][0];
+  const sw = SWEET.find(s => s.id === o.sweet) || SWEET[1];
+  const note = (m.note || '').trim();
+  return {
+    key: [p.id, o.size, o.sweet, o.boosters.join(','), note.toLowerCase()].join('|'),
+    pid: p.id, name: p.name, emoji: p.emoji, cat: p.cat,
+    size: o.size, sizeLabel: sz.label, sweet: o.sweet, sweetLabel: sw.label + ' gula',
+    boosters: o.boosters, boosterNames: o.boosters.map(id => BOOSTERS.find(b => b.id === id).name),
+    note, qty: m.qty || 1, unit: unitPrice(p, o),
+    nut: { vitC: Math.round(n.vitC), kcal: Math.round(n.kcal), sugar: Math.round(n.sugar) }
+  };
+}
+const cartUnits = () => state.cart.reduce((a, i) => a + i.qty, 0);
+
+function evalVoucher(v, sub, afterBundle, ship, delivery) {
+  let ok = true, reason = '', disc = 0;
+  if (v.memberOnly && state.userType !== 'member') { ok = false; reason = 'Khusus Member VIP'; }
+  else if (v.type === 'shipping' && !delivery) { ok = false; reason = 'Hanya untuk mode Delivery'; }
+  else if (sub < v.min) { ok = false; reason = 'Belanja ' + rp(v.min - sub) + ' lagi'; }
+  if (ok) {
+    disc = v.type === 'percent' ? Math.min(Math.floor(afterBundle * v.value / 100), v.max)
+         : v.type === 'fixed'   ? Math.min(v.value, afterBundle)
+         : Math.min(v.value, ship);
+    if (disc <= 0) { ok = false; reason = 'Belum berlaku'; }
+  }
+  return { v, ok, reason, disc };
+}
+
+function compute() {
+  const c = state.cart;
+  const sub = c.reduce((a, i) => a + i.unit * i.qty, 0);
+  const coldUnits = c.filter(i => i.cat === BUNDLE.cat).reduce((a, i) => a + i.qty, 0);
+  const sets = Math.floor(coldUnits / BUNDLE.need);
+  const bundle = sets * BUNDLE.off;
+  const afterBundle = sub - bundle;
+  const delivery = state.mode === 'delivery';
+  const zone = ZONES.find(z => z.id === state.zone) || ZONES[0];
+  const ship = delivery && c.length ? shipFee(zone) : 0;
+
+  const evals = state.claimed.map(id => VOUCHERS.find(v => v.id === id)).filter(Boolean)
+    .map(v => evalVoucher(v, sub, afterBundle, ship, delivery));
+  let chosen = null;
+  if (state.voucherChoice === 'auto') chosen = evals.filter(e => e.ok).sort((a, b) => b.disc - a.disc)[0] || null;
+  else if (state.voucherChoice !== 'none') { const e = evals.find(x => x.v.id === state.voucherChoice); if (e && e.ok) chosen = e; }
+  const voucherDisc = chosen && chosen.v.type !== 'shipping' ? chosen.disc : 0;
+  const shipDisc    = chosen && chosen.v.type === 'shipping' ? chosen.disc : 0;
+  const afterVoucher = afterBundle - voucherDisc;
+
+  // Stamp reward (Guest): 1 jus gratis = item non-bowl termurah
+  let rewardDisc = 0;
+  const rewardReady = state.userType === 'guest' && state.guest.stamps >= STAMP_GOAL;
+  if (rewardReady && state.useReward) {
+    const el = c.filter(i => i.cat !== 'bowl');
+    if (el.length) rewardDisc = Math.min(Math.min(...el.map(i => i.unit)), afterVoucher);
+  }
+  const afterReward = afterVoucher - rewardDisc;
+
+  // Poin Member
+  let ptsUsed = 0, ptsDisc = 0;
+  if (state.userType === 'member' && state.usePoints) {
+    ptsUsed = Math.min(state.member.points, Math.floor(Math.max(0, afterReward) / POINT_VALUE));
+    ptsDisc = ptsUsed * POINT_VALUE;
+  }
+  const productPay = Math.max(0, afterReward - ptsDisc);
+  const total = productPay + ship - shipDisc;
+  const earn = state.userType === 'member' ? Math.floor(productPay / POINT_EARN) : 1;
+  return { sub, coldUnits, sets, bundle, ship, shipDisc, evals, chosen, voucherDisc, rewardReady, rewardDisc, ptsUsed, ptsDisc, productPay, total, earn, delivery, zone };
+}
+
+/* =====================================================================
+   4. HELPER UI: TOAST, TICKER, SCROLL, TWEEN
+   ===================================================================== */
+function toast(msg, kind = 'ok') {
+  const el = document.createElement('div');
+  const color = kind === 'warn' ? 'bg-amber-50 border-amber-200 text-amber-900' : kind === 'err' ? 'bg-red-50 border-red-200 text-red-800' : 'bg-white border-sage-200 text-ink';
+  el.className = `toast pointer-events-auto border ${color} rounded-2xl px-4 py-3 text-sm font-medium shadow-lg flex items-start gap-2`;
+  el.innerHTML = `<span class="mt-0.5">${kind === 'ok' ? '🌿' : '⚠️'}</span><span>${esc(msg)}</span>`;
+  $('#toasts').appendChild(el);
+  setTimeout(() => { el.style.transition = 'opacity .3s'; el.style.opacity = '0'; setTimeout(() => el.remove(), 320); }, 3200);
+}
+function showTicker(instant) {
+  const el = $('#tickerText'); if (!el || !ui.tickerList.length) return;
+  const txt = ui.tickerList[ui.tickerIdx % ui.tickerList.length];
+  if (instant) { el.textContent = txt; return; }
+  el.classList.add('out');
+  setTimeout(() => { el.textContent = txt; el.classList.remove('out'); }, 230);
+}
+function pushTicker(msg) {
+  ui.tickerList.unshift(msg); ui.tickerList = ui.tickerList.slice(0, 14);
+  ui.tickerIdx = 0; showTicker();
+}
+function rotateTicker() { ui.tickerIdx = (ui.tickerIdx + 1) % ui.tickerList.length; showTicker(); }
+const NAMES = ['Rina','Dimas','Putri','Kevin','Alya','Bagus','Nadia','Rafi','Salsa','Yoga'];
+function randomEvent() {
+  const n = pick(NAMES), p = pick(PRODUCTS), r = Math.random();
+  if (r < .5)  return `${p.emoji} ${n} baru memesan ${p.name}`;
+  if (r < .7)  return `🧊 ${rand(2, 6)} botol ${p.name} baru selesai dipress`;
+  if (r < .85) return `⭐ ${n} baru melengkapi kartu stamp`;
+  return `🌱 Stok ${pick(['apel Malang','jeruk Pontianak','nanas Subang','kale Lembang','mangga Indramayu'])} baru tiba`;
+}
+function go(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function tweenNum(el, to, dec = 0) {
+  if (!el) return;
+  const from = parseFloat(el._v ?? 0) || 0;
+  el._v = to;
+  cancelAnimationFrame(el._raf);
+  const t0 = performance.now(), dur = 420;
+  const step = now => {
+    const k = clamp((now - t0) / dur, 0, 1), e = 1 - Math.pow(1 - k, 3);
+    const v = from + (to - from) * e;
+    el.textContent = dec ? fmt1(v) : Math.round(v).toLocaleString('id-ID');
+    if (k < 1) el._raf = requestAnimationFrame(step);
+  };
+  el._raf = requestAnimationFrame(step);
+}
+function lockScroll() { document.body.classList.toggle('noscroll', $('#cartDrawer').classList.contains('open') || $('#productModal').classList.contains('open') || $('#labelModal').classList.contains('open')); }
+
+/* =====================================================================
+   5. RENDER: HEADER, STATUS, HERO
+   ===================================================================== */
+const branchOpen = (b, d = new Date()) => { const h = d.getHours() + d.getMinutes() / 60; return h >= b.open && h < b.close; };
+const anyOpen = () => BRANCHES.some(b => branchOpen(b));
+
+function renderStoreStatus() {
+  const d = new Date(), open = BRANCHES.filter(b => branchOpen(b, d)), isOpen = open.length > 0;
+  $('#storeStatus').innerHTML = `
+    <span class="flex items-center gap-2 font-semibold ${isOpen ? 'text-sage' : 'text-amber-700'}">
+      <span class="status-dot ${isOpen ? 'on' : ''}"></span>
+      ${isOpen ? `Buka · ${open.length}/${BRANCHES.length} cabang beroperasi` : 'Tutup · pre-order tetap bisa, siap saat buka 08.00'}
+    </span>
+    <span class="text-ink/45 tabular-nums">${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}</span>`;
+}
+function renderUserToggle() {
+  $$('#userToggle button').forEach(b => b.classList.toggle('on', b.dataset.type === state.userType));
+}
+function renderBadges() {
+  const n = cartUnits();
+  ['#cartBadge', '#navCartBadge'].forEach(s => { const e = $(s); e.textContent = n; e.classList.toggle('hidden', n === 0); });
+}
+
+const BOTTLE_PATH = 'M48 18H72V44C72 56 96 66 96 92V190A18 18 0 0 1 78 208H42A18 18 0 0 1 24 190V92C24 66 48 56 48 44Z';
+function bottleSVG(uid, level, c1, c2, cls = '') {
+  const ty = (1 - clamp(level, 0, 1)) * 140;
+  return `<svg viewBox="0 0 120 220" class="${cls}" aria-hidden="true">
+    <defs>
+      <linearGradient id="g${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient>
+      <clipPath id="c${uid}"><path d="${BOTTLE_PATH}"/></clipPath>
+    </defs>
+    <path d="${BOTTLE_PATH}" fill="#fff" fill-opacity=".75"/>
+    <g clip-path="url(#c${uid})"><g class="liquid" style="transform:translateY(${ty}px)">
+      <rect x="-10" y="68" width="140" height="170" fill="url(#g${uid})"/>
+      <g class="wave"><path d="M-30 68 Q-15 60 0 68 T30 68 T60 68 T90 68 T120 68 T150 68 V84 H-30Z" fill="${c1}" opacity=".6"/></g>
+    </g></g>
+    <path d="${BOTTLE_PATH}" fill="none" stroke="#4A7C59" stroke-width="3" stroke-linejoin="round"/>
+    <rect x="44" y="6" width="32" height="12" rx="3" fill="#4A7C59"/>
+    <path d="M34 100V150" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+  </svg>`;
+}
+const miniBottle = (filled, color) => `<svg viewBox="0 0 120 220" class="mini-b w-8 h-14 ${filled ? 'pop' : ''}" aria-hidden="true"><path d="${BOTTLE_PATH}" fill="${filled ? color : '#fff'}" stroke="${filled ? '#4A7C59' : '#CFCAC0'}" stroke-width="7" stroke-linejoin="round"/><rect x="44" y="6" width="32" height="12" rx="3" fill="${filled ? '#4A7C59' : '#CFCAC0'}"/></svg>`;
+
+function renderHero() {
+  $('#heroArt').innerHTML = `
+    <div class="hero-blob w-64 h-64 md:w-80 md:h-80 bg-mint left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+    <div class="hero-blob w-28 h-28 bg-peach right-4 top-2"></div>
+    <div class="hero-blob w-20 h-20 bg-blush left-6 bottom-6"></div>
+    <div class="hero-blob w-14 h-14 bg-butter right-10 bottom-10"></div>
+    <div class="absolute inset-0 flex items-end justify-center gap-2 md:gap-4 pb-4">
+      <div class="floaty" style="animation-delay:-1.5s">${bottleSVG('h1', .8, '#F8BE82', '#EE9A52', 'w-20 md:w-24')}</div>
+      <div class="floaty -translate-y-6">${bottleSVG('h2', .85, '#A9D4A9', '#4A7C59', 'w-24 md:w-32')}</div>
+      <div class="floaty" style="animation-delay:-3s">${bottleSVG('h3', .75, '#F4A8C0', '#DE7C9E', 'w-20 md:w-24')}</div>
+    </div>`;
+}
+
+/* =====================================================================
+   6. RENDER: MODE PEMESANAN
+   ===================================================================== */
+function renderOrderMode() {
+  const el = $('#ordermode'), d = new Date();
+  const sorted = BRANCHES.slice().sort((a, b) => a.km - b.km);
+  const pickup = state.mode === 'pickup';
+  const zone = ZONES.find(z => z.id === state.zone) || ZONES[0];
+  el.innerHTML = `
+  <div class="card p-5 md:p-6">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+      <div>
+        <div class="text-xs font-bold tracking-wider text-sage uppercase">Langkah 1</div>
+        <h2 class="font-display text-2xl font-semibold">Mau ambil sendiri atau diantar?</h2>
+      </div>
+      <div class="seg big self-start md:self-auto" role="group" aria-label="Mode pemesanan">
+        <button data-action="set-mode" data-mode="pickup" class="${pickup ? 'on' : ''}">${ic('store', 'w-4 h-4 inline -mt-0.5 mr-1')}Pick Up</button>
+        <button data-action="set-mode" data-mode="delivery" class="${!pickup ? 'on' : ''}">${ic('bike', 'w-4 h-4 inline -mt-0.5 mr-1')}Delivery</button>
+      </div>
+    </div>
+    ${pickup ? `
+    <div class="mt-5 grid sm:grid-cols-2 gap-3">
+      ${sorted.map((b, i) => {
+        const open = branchOpen(b, d), on = state.branch === b.id;
+        return `<button data-action="pick-branch" data-id="${b.id}" class="opt !p-4 flex gap-3 items-start ${on ? 'active' : ''}" aria-pressed="${on}">
+          <span class="w-9 h-9 shrink-0 rounded-full ${on ? 'bg-sage text-white' : 'bg-sage-50 text-sage'} grid place-items-center">${ic('pin', 'w-4 h-4')}</span>
+          <span class="min-w-0 flex-1">
+            <span class="flex items-center gap-2 flex-wrap"><b class="text-sm">${esc(b.name)}</b>${i === 0 ? '<span class="text-[10px] font-bold bg-butter text-amber-800 rounded-full px-2 py-0.5">Terdekat</span>' : ''}</span>
+            <span class="block text-xs text-ink/55 mt-0.5">${esc(b.addr)}</span>
+            <span class="flex items-center gap-3 text-xs mt-1.5">
+              <span class="text-ink/60">${b.km} km</span>
+              <span class="font-semibold ${open ? 'text-sage' : 'text-amber-700'}">${open ? 'Buka' : 'Tutup'} · ${pad(b.open)}.00–${pad(b.close)}.00</span>
+            </span>
+          </span>
+        </button>`;
+      }).join('')}
+    </div>
+    <p class="mt-3 text-xs text-ink/55">Siap diambil ±10–15 menit setelah pesanan diterima. Tunjukkan ID pesanan di kasir.</p>
+    ` : `
+    <div class="mt-5 grid md:grid-cols-2 gap-4">
+      <div class="space-y-3">
+        <div>
+          <label class="lbl" for="zoneSel">Area pengantaran</label>
+          <select id="zoneSel" class="field" data-change="zone">
+            ${ZONES.map(z => `<option value="${z.id}" ${z.id === state.zone ? 'selected' : ''}>${esc(z.label)} · ${z.km} km</option>`).join('')}
+          </select>
+        </div>
+        <div>
+          <label class="lbl" for="addrFull">Alamat lengkap</label>
+          <textarea id="addrFull" rows="3" class="field" placeholder="Nama jalan, nomor rumah, RT/RW, kelurahan…" data-bind="addr.full">${esc(state.addr.full)}</textarea>
+        </div>
+        <div>
+          <label class="lbl" for="addrLandmark">Patokan</label>
+          <input id="addrLandmark" class="field" placeholder="Mis. sebelah minimarket, pagar hijau" value="${esc(state.addr.landmark)}" data-bind="addr.landmark">
+        </div>
+      </div>
+      <div class="rounded-2xl bg-sage-50 border border-sage-100 p-4 self-start">
+        <div class="flex items-center gap-2 text-sage font-semibold text-sm">${ic('bike', 'w-4 h-4')} Kalkulasi ongkir otomatis</div>
+        <div id="shipInfo" class="mt-3 space-y-1.5 text-sm">${shipInfoHTML(zone)}</div>
+        <p class="text-xs text-ink/55 mt-3">Ongkir: Rp 7.000 untuk 2 km pertama + Rp 2.500 tiap km berikutnya. Pesanan dikirim dari cabang terdekat.</p>
+      </div>
+    </div>`}
+  </div>`;
+}
+function shipInfoHTML(z) {
+  return `<div class="flex justify-between"><span class="text-ink/60">Jarak</span><b>${z.km} km</b></div>
+          <div class="flex justify-between"><span class="text-ink/60">Estimasi tiba</span><b>±${shipEta(z)} menit</b></div>
+          <div class="flex justify-between text-base pt-1.5 border-t border-sage-100"><span class="font-semibold">Ongkir</span><b class="text-sage">${rp(shipFee(z))}</b></div>`;
+}
+function updateShipUI() {
+  const z = ZONES.find(x => x.id === state.zone) || ZONES[0];
+  const el = $('#shipInfo'); if (el) el.innerHTML = shipInfoHTML(z);
+}
+
+/* =====================================================================
+   7. RENDER: PROMO (FLASH BUNDLE + VOUCHER)
+   ===================================================================== */
+function flashRemaining() { const s = 900 - (Math.floor(Date.now() / 1000) % 900); return pad(Math.floor(s / 60)) + ':' + pad(s % 60); }
+function renderPromo() {
+  const el = $('#promo'), t = compute();
+  const inCart = t.coldUnits % BUNDLE.need;
+  el.innerHTML = `
+  <div class="rounded-3xl p-5 md:p-7 overflow-hidden relative" style="background:linear-gradient(120deg,#FFF1C9 0%,#FBE3D3 55%,#F8DCE5 100%)">
+    <div class="absolute -right-6 -top-6 text-[8rem] opacity-20 select-none" aria-hidden="true">🍊</div>
+    <div class="relative flex flex-col md:flex-row md:items-center justify-between gap-5">
+      <div class="max-w-xl">
+        <div class="inline-flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-amber-800">${ic('bolt', 'w-4 h-4')} Flash Bundle · berganti dalam <span id="flashCountdown" class="tabular-nums">${flashRemaining()}</span></div>
+        <h2 class="font-display text-2xl md:text-3xl font-semibold mt-1">${BUNDLE.name}: beli 3 Cold-Pressed, hemat ${rp(BUNDLE.off)}</h2>
+        <p class="text-sm text-ink/65 mt-1.5">Diskon otomatis terpotong untuk setiap kelipatan 3 botol Cold-Pressed di keranjang, bebas pilih rasa. Bisa digabung dengan voucher.</p>
+        <div class="mt-3 flex items-center gap-2" aria-label="Progres bundle">
+          ${[0, 1, 2].map(i => `<span class="w-7 h-7 rounded-full grid place-items-center text-xs font-bold ${i < inCart || (t.sets > 0 && inCart === 0) ? 'bg-sage text-white' : 'bg-white/80 text-ink/40'}">${i < inCart || (t.sets > 0 && inCart === 0) ? '✓' : i + 1}</span>`).join('')}
+          <span class="text-xs font-semibold text-ink/70 ml-1">${t.sets > 0 ? `Bundle aktif ×${t.sets} · hemat ${rp(t.bundle)}` : `Tambah ${BUNDLE.need - inCart} Cold-Pressed lagi`}</span>
+        </div>
+      </div>
+      <button data-action="add-bundle" class="btn-primary shrink-0 self-start md:self-auto">${ic('plus', 'w-4 h-4')} Tambah ${BUNDLE.name}</button>
+    </div>
+  </div>
+
+  <div class="mt-8 flex flex-col md:flex-row md:items-end justify-between gap-3">
+    <div>
+      <div class="text-xs font-bold tracking-wider text-sage uppercase">Voucher</div>
+      <h2 class="font-display text-2xl font-semibold">Klaim, lalu terpotong otomatis</h2>
+      <p class="text-sm text-ink/60 mt-1">Voucher yang sudah diklaim akan dipakai otomatis begitu syarat minimum belanja terpenuhi.</p>
+    </div>
+    <form data-form="claim-code" class="flex gap-2">
+      <input id="codeInput" class="field !w-40 uppercase" placeholder="Kode voucher" maxlength="12" aria-label="Kode voucher">
+      <button class="btn-ghost" type="submit">Klaim</button>
+    </form>
+  </div>
+  <div class="mt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+    ${VOUCHERS.map(v => {
+      const claimed = state.claimed.includes(v.id);
+      const locked = v.memberOnly && state.userType !== 'member';
+      const e = claimed ? t.evals.find(x => x.v.id === v.id) : null;
+      const prog = claimed && t.sub > 0 ? clamp(t.sub / v.min * 100, 0, 100) : 0;
+      return `<div class="card ticket p-4 flex flex-col ${locked ? 'opacity-80' : ''}">
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] font-bold uppercase tracking-wider ${v.memberOnly ? 'text-amber-700' : 'text-sage'}">${esc(v.tag)}</span>
+          <span class="text-sage">${ic(v.type === 'shipping' ? 'bike' : 'tag', 'w-4 h-4')}</span>
+        </div>
+        <div class="font-display text-lg font-semibold mt-1">${esc(v.title)}</div>
+        <div class="text-xs text-ink/55">${esc(v.desc)}</div>
+        <div class="text-xs mt-2 font-semibold">Min. belanja ${rp(v.min)}</div>
+        <div class="mt-auto pt-3">
+          ${claimed ? `
+            <div class="h-1.5 rounded-full bg-sage-100 overflow-hidden"><div class="h-full bg-sage bar" style="width:${prog}%"></div></div>
+            <div class="text-[11px] mt-1.5 font-semibold ${e && e.ok ? 'text-sage' : 'text-ink/50'}">${e && e.ok ? '✓ Syarat terpenuhi · siap dipotong' : esc(e ? e.reason : 'Diklaim')}</div>`
+          : `<button data-action="claim" data-id="${v.id}" class="btn-ghost btn-sm w-full">${locked ? 'Khusus VIP' : 'Klaim voucher'}</button>`}
+        </div>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+/* =====================================================================
+   8. RENDER: KATALOG
+   ===================================================================== */
+function renderCatalog() {
+  const el = $('#catalog'), cat = CATS.find(c => c.id === state.cat) || CATS[0];
+  const list = PRODUCTS.filter(p => p.cat === cat.id);
+  el.innerHTML = `
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <div class="text-xs font-bold tracking-wider text-sage uppercase">Langkah 2</div>
+        <h2 class="font-display text-2xl md:text-3xl font-semibold">Pilih menu favoritmu</h2>
+      </div>
+      <div class="flex gap-2 overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0 pb-1" role="tablist">
+        ${CATS.map(c => `<button role="tab" aria-selected="${c.id === cat.id}" data-action="set-cat" data-id="${c.id}" class="chip ${c.id === cat.id ? 'on' : ''}"><span>${c.emoji}</span>${c.label}</button>`).join('')}
+      </div>
+    </div>
+    <p class="text-sm text-ink/55 mt-2">${cat.tag} · ketuk kartu untuk kustomisasi ukuran, kemanisan, dan booster.</p>
+    <div class="mt-5 grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+      ${list.map((p, i) => `
+      <button data-action="open-product" data-id="${p.id}" class="pcard group card overflow-hidden text-left transition hover:-translate-y-1 hover:shadow-lg" style="animation-delay:${i * 60}ms">
+        <div class="relative h-28 md:h-36 grid place-items-center" style="background:${p.bg}">
+          <span class="text-5xl md:text-6xl transition group-hover:scale-110 group-hover:-rotate-6">${p.emoji}</span>
+          <span class="absolute top-2.5 left-2.5 chip-sm">${p.kcal} kcal</span>
+          ${p.vitC >= 60 ? '<span class="absolute top-2.5 right-2.5 chip-sm !bg-sage !text-white">Vit C+</span>' : ''}
+        </div>
+        <div class="p-3.5 md:p-4">
+          <h3 class="font-display text-base md:text-lg font-semibold leading-tight">${esc(p.name)}</h3>
+          <p class="text-[11px] md:text-xs text-ink/55 mt-1 leading-snug">${esc(p.ing)}</p>
+          <div class="flex items-center justify-between mt-3">
+            <span class="font-semibold text-sm">${rp(p.price)}</span>
+            <span class="w-8 h-8 rounded-full bg-sage text-white grid place-items-center transition group-hover:scale-110">${ic('plus', 'w-4 h-4')}</span>
+          </div>
+        </div>
+      </button>`).join('')}
+    </div>`;
+}
+
+/* =====================================================================
+   9. MODAL KUSTOMISASI + LIVE NUTRIENT BADGE
+   ===================================================================== */
+const meter = (label, vId, bId, unit, extra = '') => `
+  <div>
+    <div class="flex items-baseline justify-between text-xs"><span class="font-semibold">${label}</span><span><b id="${vId}" class="text-sm tabular-nums">0</b> ${unit}${extra}</span></div>
+    <div class="h-2 rounded-full bg-black/5 mt-1 overflow-hidden"><div id="${bId}" class="h-full rounded-full bar" style="width:0"></div></div>
+  </div>`;
+
+function productModalHTML(p) {
+  const sizes = SIZES[p.cat];
+  return `
+  <div class="relative">
+    <button data-action="close-product" class="absolute right-3 top-3 z-10 w-9 h-9 rounded-full bg-white/95 grid place-items-center shadow" aria-label="Tutup">${ic('x', 'w-4 h-4')}</button>
+    <div class="grid md:grid-cols-5">
+      <div class="md:col-span-2 p-5 md:p-6 md:sticky md:top-0 self-start md:rounded-bl-3xl" style="background:${p.bg}">
+        <div class="flex md:block items-center gap-4">
+          <div class="text-6xl md:text-7xl md:text-center">${p.emoji}</div>
+          <div class="md:mt-3 md:text-center pr-10 md:pr-0">
+            <span class="chip-sm">${esc(catLabel(p.cat))}</span>
+            <h3 class="font-display text-2xl font-semibold mt-1 leading-tight">${esc(p.name)}</h3>
+            <p class="text-sm text-ink/70">${esc(p.ing)}</p>
+          </div>
+        </div>
+        <div class="mt-4 rounded-2xl bg-white/90 p-4 shadow-sm" aria-live="polite">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2 text-[11px] font-bold tracking-wider text-sage uppercase"><span class="status-dot on"></span>Live Nutrient Badge</div>
+            <span class="text-[10px] text-ink/45">estimasi</span>
+          </div>
+          <div class="mt-3 space-y-3">
+            ${meter('Vitamin C', 'nVit', 'bVit', 'mg', ' <span id="nVitPct" class="text-sage font-semibold"></span>')}
+            ${meter('Kalori', 'nKcal', 'bKcal', 'kcal')}
+            ${meter('Gula', 'nSugar', 'bSugar', 'g')}
+          </div>
+          <div class="grid grid-cols-3 gap-2 mt-3 text-center">
+            <div class="rounded-xl bg-sage-50 py-2"><b id="nFiber" class="tabular-nums">0</b><span class="text-[10px] text-ink/50"> g</span><div class="text-[10px] text-ink/55">Serat</div></div>
+            <div class="rounded-xl bg-sage-50 py-2"><b id="nProt" class="tabular-nums">0</b><span class="text-[10px] text-ink/50"> g</span><div class="text-[10px] text-ink/55">Protein</div></div>
+            <div class="rounded-xl bg-sage-50 py-1 grid place-items-center">
+              <div class="relative w-11 h-11"><svg viewBox="0 0 50 50" class="w-11 h-11 -rotate-90"><circle cx="25" cy="25" r="21" fill="none" stroke="#E2EDE5" stroke-width="5"/><circle id="nRing" cx="25" cy="25" r="21" fill="none" stroke="#4A7C59" stroke-width="5" stroke-linecap="round" stroke-dasharray="131.9" stroke-dashoffset="131.9" class="bar" style="transition:stroke-dashoffset .6s"/></svg><b id="nScore" class="absolute inset-0 grid place-items-center text-xs tabular-nums">0</b></div>
+              <div class="text-[10px] text-ink/55 leading-none pb-1">Skor</div>
+            </div>
+          </div>
+          <div class="mt-3">
+            <div class="text-[11px] font-semibold text-ink/60 mb-1.5">Fungsi kesehatan</div>
+            <div id="nTags" class="flex flex-wrap gap-1.5"></div>
+          </div>
+          <p class="text-[10px] text-ink/40 mt-3 leading-snug">Estimasi berdasarkan ukuran, gula, dan booster. Acuan harian: vitamin C ${AKG_VITC} mg, kalori ${REF_KCAL} kcal per sajian, gula ${REF_SUGAR} g. Bukan klaim medis.</p>
+        </div>
+      </div>
+
+      <div class="md:col-span-3 p-5 md:p-6 space-y-5">
+        <p class="text-sm text-ink/65 pr-8 md:pr-0">${esc(p.desc)}</p>
+        <div>
+          <div class="lbl">Ukuran</div>
+          <div class="grid gap-2 ${sizes.length === 3 ? 'grid-cols-3' : 'grid-cols-2'}">
+            ${sizes.map(s => `<button type="button" class="opt" data-action="m-size" data-kind="size" data-val="${s.id}"><div class="font-semibold text-sm">${s.label}</div><div class="text-[11px] text-ink/50">${s.add === 0 ? 'Harga dasar' : (s.add > 0 ? '+' : '−') + rp(Math.abs(s.add)).replace('−', '')}</div></button>`).join('')}
+          </div>
+        </div>
+        <div>
+          <div class="lbl">Tingkat kemanisan</div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            ${SWEET.map(s => `<button type="button" class="opt" data-action="m-sweet" data-kind="sweet" data-val="${s.id}"><div class="font-semibold text-sm">${s.label}</div><div class="text-[11px] text-ink/50">${s.sub}</div></button>`).join('')}
+          </div>
+        </div>
+        <div>
+          <div class="lbl">Tambahan booster</div>
+          <div class="grid gap-2">
+            ${BOOSTERS.map(b => `<button type="button" class="opt flex items-center gap-3" data-action="m-booster" data-kind="booster" data-val="${b.id}">
+              <span class="w-9 h-9 rounded-full bg-sage-50 grid place-items-center text-lg">${b.emoji}</span>
+              <span class="flex-1"><b class="text-sm block">${b.name}</b><span class="text-[11px] text-ink/50">${esc(b.fn)}</span></span>
+              <span class="text-xs font-semibold text-sage">+${rp(b.price)}</span>
+            </button>`).join('')}
+          </div>
+        </div>
+        <div>
+          <label class="lbl" for="pNote">Catatan khusus</label>
+          <textarea id="pNote" rows="2" maxlength="120" class="field" placeholder="Mis. es sedikit, tanpa ampas, kemasan hadiah"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sticky bottom-0 bg-white border-t border-[#ECE9E3] px-4 md:px-6 py-3 flex items-center gap-3">
+    <div class="flex items-center gap-1.5 shrink-0">
+      <button class="icon-btn" data-action="m-qty" data-d="-1" aria-label="Kurangi">${ic('minus', 'w-4 h-4')}</button>
+      <b id="mQty" class="w-6 text-center tabular-nums">1</b>
+      <button class="icon-btn" data-action="m-qty" data-d="1" aria-label="Tambah">${ic('plus', 'w-4 h-4')}</button>
+    </div>
+    <div id="mPills" class="hidden lg:flex gap-1.5 text-[11px] font-semibold text-ink/60"></div>
+    <button id="mAddBtn" data-action="m-add" class="btn-primary flex-1">Tambah ke keranjang</button>
+  </div>`;
+}
+
+function openProduct(pid) {
+  const p = PRODUCTS.find(x => x.id === pid); if (!p) return;
+  ui.modal = { pid, size: defaultSize(p.cat), sweet: '25', boosters: new Set(), note: '', qty: 1 };
+  const body = $('#modalBody');
+  body.innerHTML = productModalHTML(p);
+  body.scrollTop = 0;
+  $('#productModal').classList.add('open'); lockScroll();
+  ['nVit', 'nKcal', 'nSugar', 'nFiber', 'nProt', 'nScore'].forEach(id => { const e = $('#' + id); if (e) e._v = 0; });
+  refreshModal();
+}
+function closeProduct() { $('#productModal').classList.remove('open'); ui.modal = null; lockScroll(); }
+
+function refreshModal() {
+  const m = ui.modal; if (!m) return;
+  const p = PRODUCTS.find(x => x.id === m.pid);
+  const o = { size: m.size, sweet: m.sweet, boosters: [...m.boosters] };
+  $$('#productModal [data-kind]').forEach(b => {
+    const k = b.dataset.kind, v = b.dataset.val;
+    const on = k === 'size' ? m.size === v : k === 'sweet' ? m.sweet === v : m.boosters.has(v);
+    b.classList.toggle('active', on); b.setAttribute('aria-pressed', on);
+  });
+  const n = calcNutrients(p, o);
+  tweenNum($('#nVit'), n.vitC); tweenNum($('#nKcal'), n.kcal); tweenNum($('#nSugar'), n.sugar, 1);
+  tweenNum($('#nFiber'), n.fiber, 1); tweenNum($('#nProt'), n.protein, 1); tweenNum($('#nScore'), n.score);
+  $('#nVitPct').textContent = '(' + Math.round(n.vitC / AKG_VITC * 100) + '% AKG)';
+  $('#bVit').style.width = clamp(n.vitC / AKG_VITC * 100, 3, 100) + '%';   $('#bVit').style.background = '#4A7C59';
+  $('#bKcal').style.width = clamp(n.kcal / REF_KCAL * 100, 3, 100) + '%';  $('#bKcal').style.background = '#E8B14F';
+  $('#bSugar').style.width = clamp(n.sugar / REF_SUGAR * 100, 3, 100) + '%'; $('#bSugar').style.background = '#E58E9B';
+  $('#nRing').style.strokeDashoffset = 131.9 * (1 - n.score / 100);
+  $('#nTags').innerHTML = n.fns.map(f => `<span class="text-[11px] font-medium bg-sage-50 text-sage-700 rounded-full px-2.5 py-1">${esc(f)}</span>`).join('');
+  $('#mQty').textContent = m.qty;
+  $('#mPills').innerHTML = `<span>🍊 ${Math.round(n.vitC)} mg</span><span>🔥 ${Math.round(n.kcal)} kcal</span>`;
+  $('#mAddBtn').innerHTML = `Tambah ke keranjang · ${rp(unitPrice(p, o) * m.qty)}`;
+}
+function addFromModal() {
+  const m = ui.modal; if (!m) return;
+  const p = PRODUCTS.find(x => x.id === m.pid);
+  addItem(makeCartItem(p, { size: m.size, sweet: m.sweet, boosters: [...m.boosters], note: m.note, qty: m.qty }));
+  toast(`${p.name} masuk keranjang`);
+  closeProduct();
+}
+function addItem(item) {
+  const ex = state.cart.find(i => i.key === item.key);
+  if (ex) ex.qty = Math.min(20, ex.qty + item.qty); else state.cart.push(item);
+  save(); renderBadges(); renderCart(); renderPromo();
+}
+
+/* =====================================================================
+   10. KERANJANG, CHECKOUT
+   ===================================================================== */
+function openCart()  { renderCart(); $('#cartOverlay').classList.add('open'); $('#cartDrawer').classList.add('open'); lockScroll(); }
+function closeCart() { $('#cartOverlay').classList.remove('open'); $('#cartDrawer').classList.remove('open'); lockScroll(); }
+
+function cartRow(i, idx) {
+  return `<div class="card p-3 flex gap-3">
+    <div class="w-12 h-12 rounded-xl grid place-items-center text-2xl shrink-0" style="background:${(PRODUCTS.find(p => p.id === i.pid) || {}).bg || '#eee'}">${i.emoji}</div>
+    <div class="flex-1 min-w-0">
+      <div class="flex justify-between gap-2"><b class="text-sm leading-tight">${esc(i.name)}</b><b class="text-sm tabular-nums">${rp(i.unit * i.qty)}</b></div>
+      <div class="text-[11px] text-ink/55 mt-0.5 leading-snug">${esc(i.sizeLabel)} · ${esc(i.sweetLabel)}${i.boosterNames.length ? ' · +' + esc(i.boosterNames.join(', +')) : ''}</div>
+      ${i.note ? `<div class="text-[11px] text-amber-800 bg-butter/60 rounded-lg px-2 py-1 mt-1">📝 ${esc(i.note)}</div>` : ''}
+      <div class="flex items-center justify-between mt-2">
+        <div class="flex items-center gap-1.5">
+          <button class="icon-btn !w-7 !h-7" data-action="cart-qty" data-i="${idx}" data-d="-1" aria-label="Kurangi">${ic('minus', 'w-3.5 h-3.5')}</button>
+          <b class="w-5 text-center text-sm tabular-nums">${i.qty}</b>
+          <button class="icon-btn !w-7 !h-7" data-action="cart-qty" data-i="${idx}" data-d="1" aria-label="Tambah">${ic('plus', 'w-3.5 h-3.5')}</button>
+        </div>
+        <button class="text-ink/40 hover:text-red-500" data-action="cart-remove" data-i="${idx}" aria-label="Hapus">${ic('trash', 'w-4 h-4')}</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function modeSummaryHTML(t) {
+  if (state.mode === 'pickup') {
+    const b = BRANCHES.find(x => x.id === state.branch) || BRANCHES[0];
+    return `<div class="card p-3.5 flex items-start gap-3">
+      <span class="w-9 h-9 rounded-full bg-sage-50 text-sage grid place-items-center shrink-0">${ic('store', 'w-4 h-4')}</span>
+      <div class="flex-1 text-sm"><b>Pick Up</b> · ${esc(b.name)}<div class="text-xs text-ink/55">${esc(b.addr)} · siap ±10–15 menit</div></div>
+      <button class="text-xs font-semibold text-sage" data-action="edit-mode">Ubah</button></div>`;
+  }
+  const ok = (state.addr.full || '').trim().length >= 10;
+  return `<div class="card p-3.5 flex items-start gap-3 ${ok ? '' : 'border-amber-300'}">
+    <span class="w-9 h-9 rounded-full bg-sage-50 text-sage grid place-items-center shrink-0">${ic('bike', 'w-4 h-4')}</span>
+    <div class="flex-1 text-sm"><b>Delivery</b> · ${esc(t.zone.label)}
+      <div class="text-xs ${ok ? 'text-ink/55' : 'text-amber-700 font-semibold'}">${ok ? esc(state.addr.full) : 'Alamat belum lengkap — ketuk “Ubah”'} · ±${shipEta(t.zone)} menit</div></div>
+    <button class="text-xs font-semibold text-sage" data-action="edit-mode">Ubah</button></div>`;
+}
+
+function voucherBlockHTML(t) {
+  const sel = v => state.voucherChoice === v ? ' selected' : '';
+  const optsSel = `<option value="auto"${sel('auto')}>Otomatis (terbaik)</option><option value="none"${sel('none')}>Tanpa voucher</option>`
+    + t.evals.map(e => `<option value="${e.v.id}"${sel(e.v.id)}${e.ok ? '' : ' disabled'}>${esc(e.v.title)}${e.ok ? '' : ' — ' + esc(e.reason)}</option>`).join('');
+  const bundleLine = t.sets > 0
+    ? `<div class="flex items-center justify-between text-xs bg-butter/70 rounded-lg px-2.5 py-1.5"><span>⚡ Flash Bundle aktif ×${t.sets}</span><b class="text-sage">${rp(-t.bundle)}</b></div>`
+    : `<div class="text-xs text-ink/50">⚡ Tambah ${BUNDLE.need - (t.coldUnits % BUNDLE.need)} Cold-Pressed lagi untuk Flash Bundle (hemat ${rp(BUNDLE.off)}).</div>`;
+  return `<div class="card p-4 space-y-2.5">
+    <div class="flex items-center justify-between gap-3">
+      <b class="text-sm flex items-center gap-1.5">${ic('tag', 'w-4 h-4 text-sage')} Voucher</b>
+      <select class="field !py-1.5 !text-xs !w-auto max-w-[62%]" data-change="voucher-choice" aria-label="Pilih voucher">${optsSel}</select>
+    </div>
+    ${t.evals.length ? t.evals.map(e => {
+        const applied = t.chosen && t.chosen.v.id === e.v.id;
+        return `<div class="text-xs rounded-lg px-2.5 py-1.5 flex justify-between gap-2 ${applied ? 'bg-sage-50 text-sage-700 font-semibold' : 'bg-black/[.03] text-ink/55'}">
+          <span>${esc(e.v.title)}</span><span>${applied ? '✓ Terpakai ' + rp(-e.disc) : e.ok ? 'Memenuhi syarat' : esc(e.reason)}</span></div>`;
+      }).join('') : `<div class="text-xs text-ink/50">Belum ada voucher diklaim. <button class="text-sage font-semibold" data-action="go-promo">Klaim sekarang</button></div>`}
+    ${bundleLine}
+  </div>`;
+}
+
+function loyaltyBlockHTML(t) {
+  if (state.userType === 'guest') {
+    const s = state.guest.stamps;
+    if (s >= STAMP_GOAL) {
+      const eligible = state.cart.some(i => i.cat !== 'bowl');
+      return `<label class="card p-4 flex items-center gap-3 cursor-pointer border-sage ${eligible ? '' : 'opacity-70'}">
+        <span class="w-10 h-10 rounded-full bg-sage text-white grid place-items-center">${ic('gift', 'w-5 h-5')}</span>
+        <span class="flex-1 text-sm"><b>Pakai 1 jus gratis</b><span class="block text-xs text-ink/55">${eligible ? 'Item jus/shot termurah jadi gratis' + (state.useReward ? ' · hemat ' + rp(t.rewardDisc) : '') : 'Tambahkan jus, smoothie, atau shot'}</span></span>
+        <input type="checkbox" class="w-5 h-5 accent-[#4A7C59]" data-change="toggle-reward" ${state.useReward ? 'checked' : ''}>
+      </label>`;
+    }
+    return `<div class="card p-4 flex items-center gap-3"><span class="flex gap-0.5">${Array.from({ length: STAMP_GOAL }, (_, i) => `<span class="w-2.5 h-5 rounded-sm ${i < s ? 'bg-sage' : 'bg-black/10'}"></span>`).join('')}</span>
+      <span class="text-xs text-ink/65 flex-1">Stamp ${s}/${STAMP_GOAL} · checkout ini <b>+1 stamp</b>${s + 1 >= STAMP_GOAL ? ' dan jus gratis terbuka! 🎉' : ''}</span></div>`;
+  }
+  const m = state.member;
+  const maxUse = Math.min(m.points, Math.floor(Math.max(0, t.sub - t.bundle - t.voucherDisc - t.rewardDisc) / POINT_VALUE));
+  return `<label class="card p-4 flex items-center gap-3 cursor-pointer ${state.usePoints ? 'border-sage' : ''}">
+    <span class="w-10 h-10 rounded-full bg-sage text-white grid place-items-center">${ic('star', 'w-5 h-5')}</span>
+    <span class="flex-1 text-sm"><b>Pakai poin member</b>
+      <span class="block text-xs text-ink/55">${m.points.toLocaleString('id-ID')} poin tersedia (${rp(m.points * POINT_VALUE)})${state.usePoints ? ' · dipakai ' + t.ptsUsed.toLocaleString('id-ID') + ' poin = ' + rp(t.ptsDisc) : ' · bisa dipakai hingga ' + maxUse.toLocaleString('id-ID') + ' poin'}</span>
+      <span class="block text-[11px] text-sage font-semibold mt-0.5">Checkout ini mendapat +${t.earn} poin</span></span>
+    <input type="checkbox" class="w-5 h-5 accent-[#4A7C59]" data-change="toggle-points" ${state.usePoints ? 'checked' : ''}>
+  </label>`;
+}
+
+function renderCart() {
+  const body = $('#cartBody'), foot = $('#cartFoot'), c = state.cart;
+  renderBadges();
+  if (!c.length) {
+    body.innerHTML = `<div class="text-center py-14">
+      <div class="text-5xl mb-3">🧺</div>
+      <div class="font-display text-xl font-semibold">Keranjang masih kosong</div>
+      <p class="text-sm text-ink/55 mt-1">Pilih menu favoritmu, atau mulai dari bundle hemat.</p>
+      <div class="mt-5 flex flex-col gap-2 max-w-xs mx-auto">
+        <button class="btn-primary" data-action="add-bundle">${ic('bolt', 'w-4 h-4')} Tambah ${BUNDLE.name}</button>
+        <button class="btn-ghost" data-action="go-catalog">Lihat menu</button>
+      </div></div>`;
+    foot.innerHTML = '';
+    return;
+  }
+  const t = compute(), m = state.userType === 'member';
+  body.innerHTML = `
+    <div class="space-y-3">${c.map(cartRow).join('')}</div>
+    ${modeSummaryHTML(t)}
+    ${voucherBlockHTML(t)}
+    ${loyaltyBlockHTML(t)}
+    <div class="card p-4 space-y-3">
+      <b class="text-sm">Data pemesan</b>
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="lbl" for="custName">Nama</label><input id="custName" class="field" placeholder="${m ? esc(state.member.name) : 'Nama kamu'}" value="${esc(state.customer.name)}" data-bind="customer.name"></div>
+        <div><label class="lbl" for="custPhone">No. HP ${state.mode === 'delivery' ? '<span class="text-red-500">*</span>' : ''}</label><input id="custPhone" inputmode="tel" class="field" placeholder="08xxxxxxxxxx" value="${esc(state.customer.phone)}" data-bind="customer.phone"></div>
+      </div>
+      <div>
+        <div class="lbl">Metode pembayaran (simulasi)</div>
+        <div class="flex gap-2 flex-wrap">${[['qris', 'QRIS'], ['ewallet', 'E-Wallet'], ['kasir', state.mode === 'pickup' ? 'Bayar di kasir' : 'Tunai (COD)']].map(([id, l]) => `<button type="button" class="chip !py-1.5 ${state.pay === id ? 'on' : ''}" data-action="set-pay" data-id="${id}">${l}</button>`).join('')}</div>
+      </div>
+    </div>`;
+  const line = (l, v, cls = '') => `<div class="flex justify-between text-sm ${cls}"><span>${l}</span><span class="tabular-nums">${v}</span></div>`;
+  foot.innerHTML = `
+    <div class="space-y-1.5">
+      ${line('Subtotal', rp(t.sub), 'text-ink/70')}
+      ${t.bundle ? line(`Flash Bundle ×${t.sets}`, rp(-t.bundle), 'text-sage') : ''}
+      ${t.voucherDisc ? line(`Voucher ${esc(t.chosen.v.id)}`, rp(-t.voucherDisc), 'text-sage') : ''}
+      ${t.rewardDisc ? line('Jus gratis (stamp)', rp(-t.rewardDisc), 'text-sage') : ''}
+      ${t.ptsDisc ? line(`Poin member (${t.ptsUsed.toLocaleString('id-ID')})`, rp(-t.ptsDisc), 'text-sage') : ''}
+      ${state.mode === 'delivery' ? line('Ongkir', rp(t.ship), 'text-ink/70') : ''}
+      ${t.shipDisc ? line(`Voucher ${esc(t.chosen.v.id)} (ongkir)`, rp(-t.shipDisc), 'text-sage') : ''}
+      <div class="flex justify-between items-baseline pt-2 border-t border-dashed border-[#DDD8CE]"><b>Total bayar</b><b class="font-display text-2xl text-sage tabular-nums">${rp(t.total)}</b></div>
+    </div>
+    <button data-action="checkout" class="btn-primary w-full mt-3 !py-3.5">Bayar &amp; pesan · ${rp(t.total)}</button>
+    <p class="text-[11px] text-center text-ink/45 mt-2">${anyOpen() ? 'Simulasi pembayaran — tidak ada uang sungguhan.' : 'Toko sedang tutup: pesanan masuk sebagai pre-order. Simulasi pembayaran.'}</p>`;
+}
+
+function checkout() {
+  const c = state.cart;
+  if (!c.length) return toast('Keranjang masih kosong', 'warn');
+  const t = compute();
+  const delivery = state.mode === 'delivery';
+  if (delivery) {
+    if ((state.addr.full || '').trim().length < 10) {
+      toast('Lengkapi alamat lengkap untuk Delivery', 'warn'); closeCart(); setTimeout(() => { go('ordermode'); const e = $('#addrFull'); if (e) e.focus({ preventScroll: true }); }, 300); return;
+    }
+    if (!/^[0-9+\-\s]{8,}$/.test((state.customer.phone || '').trim())) {
+      toast('Isi nomor HP yang valid agar kurir bisa menghubungi', 'warn'); const e = $('#custPhone'); if (e) e.focus(); return;
+    }
+  }
+  const name = (state.customer.name || '').trim() || (state.userType === 'member' ? state.member.name : 'Tamu');
+  const id = 'LJ-' + (++state.seq), now = Date.now();
+  const branch = BRANCHES.find(b => b.id === state.branch) || BRANCHES[0];
+  const loyalty = {};
+
+  if (state.userType === 'guest') {
+    const g = state.guest;
+    if (t.rewardDisc > 0) { g.stamps = Math.max(0, g.stamps - STAMP_GOAL); loyalty.redeemed = true; }
+    g.stamps = Math.min(STAMP_GOAL, g.stamps + 1);
+    loyalty.type = 'stamp'; loyalty.amount = 1; loyalty.after = g.stamps;
+  } else {
+    const m = state.member;
+    m.points -= t.ptsUsed; m.points += t.earn; m.lifetime += t.earn;
+    if (t.ptsUsed) m.history.push({ t: now, label: 'Tukar poin ' + id, pts: -t.ptsUsed });
+    if (t.earn) m.history.push({ t: now, label: 'Pesanan ' + id, pts: t.earn });
+    m.history = m.history.slice(-12);
+    loyalty.type = 'points'; loyalty.amount = t.earn; loyalty.used = t.ptsUsed;
+  }
+
+  const order = {
+    id, source: 'customer', createdAt: now, updatedAt: now, status: 0, times: [now, null, null, null, null],
+    customer: { name, phone: state.customer.phone || '', type: state.userType },
+    mode: state.mode, branchName: branch.name,
+    address: delivery ? { full: state.addr.full.trim(), landmark: (state.addr.landmark || '').trim(), zone: t.zone.label, km: t.zone.km, eta: shipEta(t.zone) } : null,
+    items: c.map(i => ({ ...i })), pay: state.pay, preorder: !anyOpen(),
+    totals: { sub: t.sub, bundle: t.bundle, voucher: t.voucherDisc, voucherId: t.chosen ? t.chosen.v.id : '', reward: t.rewardDisc, points: t.ptsDisc, ship: t.ship, shipDisc: t.shipDisc, total: t.total },
+    validated: false, loyalty, labelsPrinted: false
+  };
+  state.orders.push(order);
+  state.orders = state.orders.slice(-40);
+  if (t.chosen) state.claimed = state.claimed.filter(v => v !== t.chosen.v.id);   // voucher sekali pakai
+  state.cart = []; state.useReward = false; state.usePoints = false; state.voucherChoice = 'auto';
+  save();
+
+  pushTicker(`🧾 ${name} memesan ${c.reduce((a, i) => a + i.qty, 0)} item — ${id} masuk antrean`);
+  closeCart();
+  renderAll();
+  toast(state.userType === 'guest' ? `Pesanan ${id} diterima! +1 stamp (${state.guest.stamps}/${STAMP_GOAL})` : `Pesanan ${id} diterima! +${t.earn} poin member`);
+  if (order.preorder) setTimeout(() => toast('Toko sedang tutup — pesananmu tercatat sebagai pre-order.', 'warn'), 600);
+  setTimeout(() => go('tracking'), 350);
+}
+
+/* =====================================================================
+   11. LOYALTY (STAMP vs POIN)
+   ===================================================================== */
+function renderLoyalty() {
+  const el = $('#loyalty');
+  if (state.userType === 'guest') {
+    const s = state.guest.stamps, lvl = s / STAMP_GOAL, full = s >= STAMP_GOAL;
+    const c1 = full ? '#A9D4A9' : '#F8BE82', c2 = full ? '#4A7C59' : '#EE9A52';
+    const colors = ['#F8BE82', '#A9D4A9', '#F4A8C0', '#F6DC7A', '#C9B1E3'];
+    el.innerHTML = `
+    <div class="card overflow-hidden">
+      <div class="grid md:grid-cols-5">
+        <div class="md:col-span-2 p-6 grid place-items-center" style="background:linear-gradient(160deg,#F0F5F1,#FFF1C9)">
+          ${bottleSVG('L', ui.bottleLevel, c1, c2, 'w-28 md:w-36')}
+          <div class="mt-2 text-xs font-bold tracking-wider uppercase text-sage">${s}/${STAMP_GOAL} stamp</div>
+        </div>
+        <div class="md:col-span-3 p-6">
+          <div class="text-xs font-bold tracking-wider text-sage uppercase">Loyalty · Status Guest</div>
+          <h2 class="font-display text-2xl font-semibold mt-0.5">Kartu Stamp Digital</h2>
+          <p class="text-sm text-ink/60 mt-1">Setiap transaksi mengisi satu stamp. Isi botol sampai penuh dan dapatkan <b>1 jus gratis</b>.</p>
+          <div class="mt-4 flex items-end gap-2" aria-label="Stamp terkumpul">${Array.from({ length: STAMP_GOAL }, (_, i) => miniBottle(i < s, colors[i])).join('')}
+            <span class="ml-2 mb-1 text-3xl">${full ? '🎉' : '🎁'}</span></div>
+          <div class="mt-4 text-sm ${full ? 'text-sage font-semibold' : 'text-ink/65'}">${full ? 'Botolmu penuh! Satu jus gratis siap dipakai di checkout.' : `Kurang <b>${STAMP_GOAL - s}</b> stamp lagi untuk jus gratis.`}</div>
+          <div class="mt-5 flex flex-wrap gap-2">
+            ${full ? `<button class="btn-primary" data-action="use-reward">${ic('gift', 'w-4 h-4')} Pakai jus gratis</button>` : `<button class="btn-primary" data-action="go-catalog">Pesan sekarang</button>`}
+            <button class="btn-ghost" data-action="set-user" data-type="member">${ic('star', 'w-4 h-4')} Upgrade ke Member VIP</button>
+            <button class="btn-ghost btn-sm" data-action="sim-stamp" title="Simulasi transaksi cepat untuk demo">Demo: +1 transaksi</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const l = $('#loyalty .liquid'); if (l) l.style.transform = `translateY(${(1 - lvl) * 140}px)`;
+    }));
+    ui.bottleLevel = lvl;
+  } else {
+    const m = state.member;
+    const tier = m.lifetime >= 5000 ? 'Platinum' : m.lifetime >= 2000 ? 'Gold' : 'Silver';
+    const next = tier === 'Silver' ? 2000 : tier === 'Gold' ? 5000 : null;
+    const pct = next ? clamp(m.lifetime / next * 100, 0, 100) : 100;
+    el.innerHTML = `
+    <div class="card overflow-hidden">
+      <div class="grid md:grid-cols-5">
+        <div class="md:col-span-2 p-6 text-white relative overflow-hidden" style="background:linear-gradient(150deg,#4A7C59,#325640)">
+          <div class="absolute -right-8 -bottom-8 text-[9rem] opacity-10" aria-hidden="true">🌿</div>
+          <div class="relative">
+            <div class="flex items-center justify-between"><span class="text-[11px] font-bold tracking-widest uppercase opacity-80">Member VIP · ${tier}</span><span class="text-xl">👑</span></div>
+            <div class="mt-5 text-sm opacity-80">${esc(m.name)}</div>
+            <div class="font-display text-5xl font-semibold tabular-nums mt-1">${m.points.toLocaleString('id-ID')}</div>
+            <div class="text-sm opacity-85">poin · setara ${rp(m.points * POINT_VALUE)}</div>
+            <div class="mt-5 text-[11px] opacity-80">${next ? `${(next - m.lifetime).toLocaleString('id-ID')} poin lagi menuju ${tier === 'Silver' ? 'Gold' : 'Platinum'}` : 'Tier tertinggi tercapai'}</div>
+            <div class="h-1.5 rounded-full bg-white/20 mt-1.5 overflow-hidden"><div class="h-full bg-white bar" style="width:${pct}%"></div></div>
+          </div>
+        </div>
+        <div class="md:col-span-3 p-6">
+          <div class="text-xs font-bold tracking-wider text-sage uppercase">Loyalty · Status Member VIP</div>
+          <h2 class="font-display text-2xl font-semibold mt-0.5">Poin yang langsung jadi diskon</h2>
+          <ul class="mt-2 text-sm text-ink/65 space-y-1">
+            <li>• Dapat <b>1 poin</b> tiap belanja Rp 1.000</li>
+            <li>• Tukar langsung di checkout: <b>1 poin = ${rp(POINT_VALUE)}</b></li>
+            <li>• Akses voucher eksklusif VIP 20%</li>
+          </ul>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <button class="btn-primary" data-action="use-points">${ic('star', 'w-4 h-4')} ${state.usePoints ? 'Poin aktif di checkout' : 'Pakai poin di checkout'}</button>
+            <button class="btn-ghost" data-action="set-user" data-type="guest">Lihat kartu stamp (Guest)</button>
+          </div>
+          <div class="mt-5">
+            <div class="text-xs font-semibold text-ink/55 mb-1.5">Riwayat poin terbaru</div>
+            <div class="space-y-1">${m.history.slice(-4).reverse().map(h => `<div class="flex justify-between text-xs bg-black/[.03] rounded-lg px-2.5 py-1.5"><span>${esc(h.label)} · ${new Date(h.t).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}</span><b class="${h.pts >= 0 ? 'text-sage' : 'text-rose-600'}">${h.pts >= 0 ? '+' : ''}${h.pts}</b></div>`).join('')}</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+}
+
+/* =====================================================================
+   12. TRACKING PESANAN (KUSTOMER)
+   ===================================================================== */
+function timelineHTML(o) {
+  return `<ol class="tl">${[0, 1, 2, 3].map(i => {
+    const st = (o.status > i || (i === 3 && o.status >= 3)) ? 'done' : (o.status === i ? 'now' : 'todo');
+    return `<li class="${st}">
+      <span class="dot">${st === 'done' ? '✓' : i + 1}</span>
+      <div class="flex items-baseline justify-between gap-2"><b class="text-sm">${esc(stepTitle(o, i))}</b><span class="text-[11px] text-ink/45 tabular-nums">${o.times[i] ? hm(o.times[i]) : ''}</span></div>
+      <div class="text-xs text-ink/55">${esc(stepDesc(o, i))}</div></li>`;
+  }).join('')}</ol>`;
+}
+function renderTracking() {
+  const el = $('#tracking');
+  const mine = state.orders.filter(o => o.source === 'customer').sort((a, b) => b.createdAt - a.createdAt);
+  const head = `<div class="text-xs font-bold tracking-wider text-sage uppercase">Langkah 3</div><h2 class="font-display text-2xl md:text-3xl font-semibold">Lacak pesananmu</h2>`;
+  if (!mine.length) {
+    el.innerHTML = `${head}
+      <div class="card p-6 mt-4 grid md:grid-cols-2 gap-6 items-center">
+        <div><p class="text-sm text-ink/65">Setelah checkout, kamu bisa memantau pesanan langsung dari dapur kami — lengkap dengan tiap tahap pembuatan jus.</p>
+          <button class="btn-primary mt-4" data-action="go-catalog">Pesan sekarang</button></div>
+        <ol class="space-y-2 text-sm text-ink/60">${STEPS.map((s, i) => `<li class="flex gap-3 items-center"><span class="w-7 h-7 rounded-full bg-sage-50 text-sage font-bold text-xs grid place-items-center">${i + 1}</span>${esc(i === 3 ? 'Siap Dikirim / Diambil' : s.t)}</li>`).join('')}</ol>
+      </div>`;
+    return;
+  }
+  const o = mine[0], done = o.status >= 4, prog = clamp(o.status / 3 * 100, 4, 100);
+  const eta = o.status >= 3 ? 0 : (3 - o.status) * 4 + (o.mode === 'delivery' && o.address ? Math.round(o.address.eta / 2) : 0);
+  el.innerHTML = `${head}
+  <div class="card p-5 md:p-6 mt-4">
+    <div class="flex flex-wrap items-start justify-between gap-3">
+      <div>
+        <div class="flex items-center gap-2 flex-wrap"><b class="font-display text-xl">${esc(o.id)}</b>
+          <span class="chip-sm !bg-sage-50 text-sage-700">${o.mode === 'delivery' ? '🛵 Delivery' : '🛍️ Pick Up'}</span>
+          ${o.preorder ? '<span class="chip-sm !bg-butter text-amber-800">Pre-order</span>' : ''}</div>
+        <div class="text-xs text-ink/55 mt-1">${hm(o.createdAt)} · ${esc(o.customer.name)} · ${o.mode === 'delivery' ? esc(o.address.zone) : esc(o.branchName)}</div>
+      </div>
+      <div class="text-right"><div class="text-xs text-ink/50">Total</div><b class="text-lg tabular-nums">${rp(o.totals.total)}</b></div>
+    </div>
+    <div class="mt-4 h-2 rounded-full bg-sage-100 overflow-hidden"><div class="h-full bg-sage bar rounded-full" style="width:${done ? 100 : prog}%"></div></div>
+    <div class="flex justify-between text-xs mt-1.5 text-ink/55"><span>${done ? 'Pesanan selesai ✓' : o.status >= 3 ? (o.mode === 'delivery' ? 'Kurir segera berangkat' : 'Silakan ambil di kasir') : `Estimasi ±${eta} menit lagi`}</span><span>${Math.min(o.status + 1, 4)}/4 tahap</span></div>
+    <div class="grid md:grid-cols-2 gap-6 mt-5">
+      <div>${timelineHTML(o)}</div>
+      <div class="rounded-2xl bg-ivory border border-[#ECE9E3] p-4 text-sm self-start">
+        <b>Ringkasan</b>
+        <div class="mt-2 space-y-1">${o.items.map(i => `<div class="flex justify-between gap-2 text-xs"><span>${i.qty}× ${esc(i.name)} <span class="text-ink/45">· ${esc(i.sizeLabel)}</span></span><span class="tabular-nums">${rp(i.unit * i.qty)}</span></div>`).join('')}</div>
+        <div class="mt-3 pt-2 border-t border-dashed border-[#DDD8CE] text-xs text-ink/60">${o.mode === 'delivery' ? `Dikirim ke: ${esc(o.address.full)}${o.address.landmark ? ' (' + esc(o.address.landmark) + ')' : ''}` : `Ambil di: ${esc(o.branchName)}`}</div>
+        <div class="mt-2 text-xs ${o.validated ? 'text-sage font-semibold' : 'text-ink/55'}">${o.loyalty.type === 'stamp' ? `⭐ +1 stamp${o.loyalty.redeemed ? ' · jus gratis dipakai' : ''}` : `⭐ +${o.loyalty.amount} poin${o.loyalty.used ? ' · ' + o.loyalty.used + ' poin dipakai' : ''}`} · ${o.validated ? 'divalidasi barista ✓' : 'menunggu validasi barista'}</div>
+      </div>
+    </div>
+    ${mine.length > 1 ? `<div class="mt-6 pt-4 border-t border-[#ECE9E3]"><div class="text-xs font-semibold text-ink/55 mb-2">Pesanan sebelumnya</div>
+      <div class="space-y-1.5">${mine.slice(1, 5).map(p => `<div class="flex items-center justify-between text-xs bg-black/[.03] rounded-lg px-3 py-2"><span><b>${esc(p.id)}</b> · ${hm(p.createdAt)} · ${p.items.reduce((a, i) => a + i.qty, 0)} item</span><span class="font-semibold ${p.status >= 3 ? 'text-sage' : 'text-amber-700'}">${p.status >= 4 ? 'Selesai' : esc(stepTitle(p, Math.min(p.status, 3)))}</span></div>`).join('')}</div></div>` : ''}
+  </div>`;
+}
+
+/* =====================================================================
+   13. ALUR PESANAN: ADVANCE, SIMULASI
+   ===================================================================== */
+function advanceOrder(o, manual) {
+  if (o.status >= 4) return;
+  o.status++; o.times[o.status] = Date.now(); o.updatedAt = Date.now();
+  save();
+  if (o.source === 'customer') {
+    const label = o.status >= 4 ? 'Selesai' : stepTitle(o, o.status);
+    pushTicker(`🧃 ${o.id} → ${label}`);
+    if (ui.view === 'shop' && o.status < 4) toast(`${o.id}: ${label}`);
+  }
+  renderTracking();
+  if (ui.view === 'pos') renderPOS();
+}
+function createSimOrder() {
+  const items = [];
+  for (let k = 0, n = rand(1, 3); k < n; k++) {
+    const p = pick(PRODUCTS);
+    items.push(makeCartItem(p, { size: defaultSize(p.cat), sweet: pick(SWEET).id, boosters: Math.random() < .4 ? [pick(BOOSTERS).id] : [], note: Math.random() < .3 ? pick(['Es sedikit', 'Tanpa es', 'Kemasan hadiah', 'Tolong cepat ya']) : '', qty: rand(1, 2) }));
+  }
+  const sub = items.reduce((a, i) => a + i.unit * i.qty, 0), mode = Math.random() < .5 ? 'pickup' : 'delivery';
+  const z = pick(ZONES), ship = mode === 'delivery' ? shipFee(z) : 0, now = Date.now();
+  const o = {
+    id: 'LJ-' + (++state.seq), source: 'sim', createdAt: now, updatedAt: now, status: 0, times: [now, null, null, null, null],
+    customer: { name: pick(NAMES), phone: '08' + rand(1000000000, 1999999999), type: Math.random() < .3 ? 'member' : 'guest' },
+    mode, branchName: pick(BRANCHES).name, address: mode === 'delivery' ? { full: 'Jl. Contoh No. ' + rand(1, 99) + ', ' + z.label, landmark: '', zone: z.label, km: z.km, eta: shipEta(z) } : null,
+    items, pay: pick(['qris', 'ewallet', 'kasir']), preorder: false,
+    totals: { sub, bundle: 0, voucher: 0, voucherId: '', reward: 0, points: 0, ship, shipDisc: 0, total: sub + ship },
+    validated: false, loyalty: { type: 'stamp', amount: 1 }, labelsPrinted: false
+  };
+  state.orders.push(o); state.orders = state.orders.slice(-40); save();
+  pushTicker(`🧾 ${o.customer.name} memesan ${items.reduce((a, i) => a + i.qty, 0)} item — ${o.id} masuk antrean`);
+  renderPOS();
+  toast(`Pesanan simulasi ${o.id} masuk`);
+}
+
+/* =====================================================================
+   14. BARISTA POS VIEW
+   ===================================================================== */
+const COL_TITLES = ['Diterima', 'Cuci & Potong', 'Press & Botol', 'Siap'];
+const ADV_LABELS = ['Mulai cuci & potong', 'Mulai press & botol', 'Tandai siap', 'Selesaikan pesanan'];
+const since = ts => { const s = Math.max(0, Math.floor((Date.now() - ts) / 1000)); return s < 60 ? s + ' dtk' : Math.floor(s / 60) + ' mnt'; };
+
+function posCard(o) {
+  const loyaltyTxt = o.loyalty.type === 'stamp' ? `+1 stamp${o.loyalty.redeemed ? ' (reward dipakai)' : ''}` : `+${o.loyalty.amount} poin${o.loyalty.used ? ' / −' + o.loyalty.used : ''}`;
+  return `<div class="card p-3.5 space-y-2.5">
+    <div class="flex items-start justify-between gap-2">
+      <div><b class="font-display text-base">${esc(o.id)}</b>
+        <span class="text-[11px] text-ink/50 ml-1">· <span data-since="${o.createdAt}">${since(o.createdAt)}</span></span>
+        <div class="text-xs text-ink/65">${esc(o.customer.name)}${o.customer.type === 'member' ? ' <span class="text-amber-700 font-semibold">👑 VIP</span>' : ''}</div></div>
+      <span class="chip-sm !bg-sage-50 text-sage-700 shrink-0">${o.mode === 'delivery' ? '🛵 Delivery' : '🛍️ Pick Up'}</span>
+    </div>
+    ${o.preorder ? '<div class="text-[11px] font-semibold text-amber-800 bg-butter rounded-lg px-2 py-1">Pre-order (dipesan saat toko tutup)</div>' : ''}
+    <div class="space-y-1.5">${o.items.map(i => `<div class="text-xs leading-snug"><b>${i.qty}× ${esc(i.name)}</b> <span class="text-ink/55">· ${esc(i.sizeLabel)} · ${esc(i.sweetLabel)}${i.boosterNames.length ? ' · +' + esc(i.boosterNames.join(', +')) : ''}</span>${i.note ? `<div class="text-amber-800 bg-butter/60 rounded px-1.5 py-0.5 mt-0.5">📝 ${esc(i.note)}</div>` : ''}</div>`).join('')}</div>
+    <div class="text-[11px] text-ink/55">${o.mode === 'delivery' && o.address ? '📍 ' + esc(o.address.full) : '📍 ' + esc(o.branchName)} · <b>${rp(o.totals.total)}</b> · ${o.pay === 'kasir' ? 'bayar di kasir' : esc(o.pay.toUpperCase())}</div>
+    <div class="flex flex-wrap gap-1.5">
+      ${o.status < 4 ? `<button class="btn-primary btn-sm !py-1.5 flex-1" data-action="pos-advance" data-id="${o.id}">${ADV_LABELS[o.status]}</button>` : ''}
+      <button class="btn-ghost btn-sm" data-action="pos-label" data-id="${o.id}">${ic('print', 'w-3.5 h-3.5')} Label${o.labelsPrinted ? ' ✓' : ''}</button>
+    </div>
+    <div class="flex items-center justify-between text-[11px] pt-2 border-t border-dashed border-[#E4E0D8]">
+      <span class="text-ink/55">⭐ ${loyaltyTxt}</span>
+      ${o.validated ? '<span class="text-sage font-semibold">✓ Tervalidasi</span>' : `<button class="font-semibold text-sage hover:underline" data-action="pos-validate" data-id="${o.id}">Validasi stamp/poin</button>`}
+    </div>
+  </div>`;
+}
+
+function renderPOS() {
+  const el = $('#posView');
+  const os = state.orders.slice().sort((a, b) => a.createdAt - b.createdAt);
+  const active = os.filter(o => o.status < 4), done = os.filter(o => o.status >= 4).sort((a, b) => b.updatedAt - a.updatedAt);
+  const revenue = os.reduce((a, o) => a + o.totals.total, 0);
+  const pending = os.filter(o => o.source === 'customer' && !o.validated);
+  const m = state.member, g = state.guest;
+  el.innerHTML = `
+  <header class="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-[#ECE9E3]">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center gap-3">
+      <span class="w-9 h-9 rounded-full bg-sage text-white grid place-items-center">${ic('leaf', 'w-4 h-4')}</span>
+      <div class="leading-tight"><div class="font-display text-lg font-semibold">Barista POS</div><div class="text-[11px] text-ink/50">Local Juice · ${anyOpen() ? 'Toko buka' : 'Toko tutup'}</div></div>
+      <div class="ml-auto flex items-center gap-2 flex-wrap justify-end">
+        <button class="btn-ghost btn-sm" data-action="pos-auto">${ic(state.autoSim ? 'pause' : 'play', 'w-3.5 h-3.5')} Auto-simulasi: ${state.autoSim ? 'ON' : 'OFF'}</button>
+        <button class="btn-ghost btn-sm" data-action="pos-sim-order">${ic('plus', 'w-3.5 h-3.5')} Simulasi pesanan</button>
+        <button class="btn-primary btn-sm !py-2" data-action="close-pos">${ic('back', 'w-4 h-4')} Ke toko</button>
+      </div>
+    </div>
+  </header>
+  <main class="max-w-7xl mx-auto px-4 py-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      ${[['Antrean aktif', active.length, '🧃'], ['Selesai', done.length, '✅'], ['Omzet', rp(revenue), '💰'], ['Rata-rata/pesanan', rp(os.length ? revenue / os.length : 0), '📈']]
+        .map(([l, v, e]) => `<div class="card p-4"><div class="text-xs text-ink/50">${e} ${l}</div><div class="font-display text-2xl font-semibold mt-1 tabular-nums">${v}</div></div>`).join('')}
+    </div>
+
+    <div class="mt-6 grid lg:grid-cols-4 gap-4">
+      ${[0, 1, 2, 3].map(s => {
+        const list = active.filter(o => o.status === s);
+        return `<section class="rounded-2xl bg-black/[.025] p-3">
+          <div class="flex items-center justify-between px-1 mb-2.5"><b class="text-sm">${s + 1}. ${COL_TITLES[s]}</b><span class="text-xs font-bold bg-white rounded-full px-2 py-0.5 border border-[#ECE9E3]">${list.length}</span></div>
+          <div class="space-y-3 min-h-[3rem]">${list.length ? list.map(posCard).join('') : '<div class="text-xs text-ink/40 text-center py-5">Kosong</div>'}</div>
+        </section>`;
+      }).join('')}
+    </div>
+
+    <div class="mt-6 grid lg:grid-cols-3 gap-4">
+      <section class="card p-4 lg:col-span-2">
+        <b class="text-sm">Validasi stamp &amp; poin</b>
+        <p class="text-xs text-ink/55 mt-0.5">Konfirmasi bahwa stamp/poin pelanggan sudah sesuai transaksi di kasir.</p>
+        <div class="mt-3 space-y-1.5">${pending.length ? pending.slice(-6).reverse().map(o => `<div class="flex items-center justify-between gap-2 text-xs bg-black/[.03] rounded-lg px-3 py-2"><span><b>${esc(o.id)}</b> · ${esc(o.customer.name)} · ${o.loyalty.type === 'stamp' ? '+1 stamp' : '+' + o.loyalty.amount + ' poin'}</span><button class="btn-ghost btn-sm !py-1" data-action="pos-validate" data-id="${o.id}">Validasi</button></div>`).join('') : '<div class="text-xs text-ink/45 py-3">Tidak ada yang menunggu validasi.</div>'}</div>
+        <div class="mt-4 grid sm:grid-cols-2 gap-3 text-xs">
+          <div class="rounded-xl bg-sage-50 p-3"><div class="text-ink/55">Pelanggan aktif · Guest</div><b class="text-sm">Stamp ${g.stamps}/${STAMP_GOAL}</b> ${g.stamps >= STAMP_GOAL ? '<span class="text-sage font-semibold">· reward siap</span>' : ''}</div>
+          <div class="rounded-xl bg-sage-50 p-3"><div class="text-ink/55">Pelanggan aktif · ${esc(m.name)} (VIP)</div><b class="text-sm">${m.points.toLocaleString('id-ID')} poin</b> <span class="text-ink/50">(${rp(m.points * POINT_VALUE)})</span></div>
+        </div>
+      </section>
+      <section class="card p-4">
+        <b class="text-sm">Selesai terakhir</b>
+        <div class="mt-3 space-y-1.5">${done.length ? done.slice(0, 5).map(o => `<div class="flex items-center justify-between text-xs bg-black/[.03] rounded-lg px-3 py-2"><span><b>${esc(o.id)}</b> · ${esc(o.customer.name)}</span><span class="tabular-nums">${rp(o.totals.total)}</span></div>`).join('') : '<div class="text-xs text-ink/45 py-3">Belum ada pesanan selesai.</div>'}</div>
+      </section>
+    </div>
+  </main>`;
+}
+
+/* ---- Label botol ---- */
+function fakeBarcode(str) {
+  let x = 0, bars = '';
+  for (const ch of (str + 'LJ')) {
+    const c = ch.charCodeAt(0);
+    for (let b = 0; b < 6; b++) { const w = ((c >> b) & 1) ? 2 : 1; bars += `<rect x="${x}" y="0" width="${w}" height="24"/>`; x += w + 1; }
+  }
+  return `<svg viewBox="0 0 ${x} 24" class="h-6 w-full" preserveAspectRatio="none" fill="#2D3748" aria-hidden="true">${bars}</svg>`;
+}
+function labelsHTML(o) {
+  const out = [], total = o.items.reduce((a, i) => a + i.qty, 0); let n = 0;
+  o.items.forEach(i => { for (let k = 0; k < i.qty; k++) { n++; out.push(`
+    <div class="label-item border-2 border-dashed border-[#2D3748]/40 rounded-xl p-3 bg-white text-xs">
+      <div class="flex items-center justify-between"><b class="tracking-widest text-[11px]">LOCAL JUICE</b><b>${n}/${total}</b></div>
+      <div class="mt-1 flex items-baseline justify-between"><b class="font-display text-lg">${esc(o.id)}</b><span>${esc(o.customer.name)}</span></div>
+      <div class="mt-1.5 font-bold text-sm">${i.emoji} ${esc(i.name)}</div>
+      <div>${esc(i.sizeLabel)} · ${esc(i.sweetLabel)}</div>
+      ${i.boosterNames.length ? `<div>+ ${esc(i.boosterNames.join(', '))}</div>` : ''}
+      ${i.note ? `<div class="font-semibold mt-0.5">Catatan: ${esc(i.note)}</div>` : ''}
+      <div class="mt-1 text-[10px] text-ink/70">≈ ${i.nut.kcal} kcal · Vit C ${i.nut.vitC} mg · gula ${i.nut.sugar} g</div>
+      <div class="mt-1.5">${fakeBarcode(o.id + i.pid + k)}</div>
+      <div class="mt-1 flex justify-between text-[10px] text-ink/65"><span>Dibotolkan ${hm(Date.now())} · ${new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short' })}</span><span>${o.mode === 'delivery' ? 'DELIVERY' : 'PICK UP'}</span></div>
+      <div class="text-[10px] text-ink/65">Simpan 2–4°C · konsumsi maks. 24 jam</div>
+    </div>`); } });
+  return out.join('');
+}
+function openLabels(id) {
+  const o = state.orders.find(x => x.id === id); if (!o) return;
+  $('#labelBody').innerHTML = `
+    <div class="p-5 md:p-6">
+      <div class="flex items-center justify-between gap-3 no-print">
+        <div><div class="font-display text-xl font-semibold">Label botol · ${esc(o.id)}</div><div class="text-xs text-ink/55">${o.items.reduce((a, i) => a + i.qty, 0)} label siap dicetak</div></div>
+        <div class="flex gap-2"><button class="btn-primary btn-sm !py-2" data-action="print-label" data-id="${o.id}">${ic('print', 'w-4 h-4')} Cetak</button><button class="icon-btn" data-action="close-label" aria-label="Tutup">${ic('x', 'w-4 h-4')}</button></div>
+      </div>
+      <div class="mt-4 grid sm:grid-cols-2 gap-3">${labelsHTML(o)}</div>
+    </div>`;
+  $('#labelModal').classList.add('open'); lockScroll();
+}
+function closeLabels() { $('#labelModal').classList.remove('open'); lockScroll(); }
+function printLabels(id) {
+  const o = state.orders.find(x => x.id === id);
+  if (o) { o.labelsPrinted = true; save(); }
+  document.body.classList.add('printing-labels');
+  const done = () => { document.body.classList.remove('printing-labels'); window.removeEventListener('afterprint', done); if (ui.view === 'pos') renderPOS(); };
+  window.addEventListener('afterprint', done);
+  try { window.print(); } catch (e) { done(); }
+  toast('Label dikirim ke printer');
+}
+
+/* =====================================================================
+   15. VIEW SWITCH + RENDER ALL
+   ===================================================================== */
+function setView(v) {
+  ui.view = v;
+  $('#shopView').classList.toggle('hidden', v !== 'shop');
+  $('#posView').classList.toggle('hidden', v !== 'pos');
+  if (v === 'pos') renderPOS(); else { renderTracking(); renderLoyalty(); }
+  window.scrollTo({ top: 0 });
+}
+function renderAll() {
+  renderUserToggle(); renderBadges(); renderStoreStatus();
+  renderOrderMode(); renderPromo(); renderCatalog(); renderLoyalty(); renderTracking(); renderCart();
+  if (ui.view === 'pos') renderPOS();
+}
+
+/* =====================================================================
+   16. EVENT HANDLERS (delegasi)
+   ===================================================================== */
+const actions = {
+  'go':          t => { closeCart(); go(t.dataset.to); },
+  'go-catalog':  () => { closeCart(); go('catalog'); },
+  'go-promo':    () => { closeCart(); go('promo'); },
+  'edit-mode':   () => { closeCart(); setTimeout(() => go('ordermode'), 250); },
+  'set-user': t => {
+    const ty = t.dataset.type; if (state.userType === ty) return;
+    state.userType = ty; state.useReward = false; state.usePoints = false; save();
+    renderUserToggle(); renderLoyalty(); renderPromo(); renderCart();
+    toast(ty === 'member' ? 'Mode Member VIP aktif: poin bisa dipakai di checkout' : 'Mode Guest aktif: kumpulkan stamp untuk jus gratis');
+    if (t.closest('#loyalty')) go('loyalty');
+  },
+  'open-cart': () => openCart(),
+  'close-cart': () => closeCart(),
+  'cart-clear': () => { if (!state.cart.length) return; state.cart = []; save(); renderCart(); renderPromo(); },
+  'set-mode': t => { state.mode = t.dataset.mode; save(); renderOrderMode(); renderCart(); renderPromo(); },
+  'pick-branch': t => { state.branch = t.dataset.id; save(); renderOrderMode(); renderCart(); const b = BRANCHES.find(x => x.id === state.branch); if (!branchOpen(b)) toast(b.name + ' sedang tutup — pesananmu jadi pre-order.', 'warn'); },
+  'set-cat': t => { state.cat = t.dataset.id; save(); renderCatalog(); },
+  'open-product': t => openProduct(t.dataset.id),
+  'close-product': () => closeProduct(),
+  'm-size':    t => { ui.modal.size = t.dataset.val; refreshModal(); },
+  'm-sweet':   t => { ui.modal.sweet = t.dataset.val; refreshModal(); },
+  'm-booster': t => { const s = ui.modal.boosters, v = t.dataset.val; s.has(v) ? s.delete(v) : s.add(v); refreshModal(); },
+  'm-qty':     t => { ui.modal.qty = clamp(ui.modal.qty + Number(t.dataset.d), 1, 20); refreshModal(); },
+  'm-add':     () => addFromModal(),
+  'cart-qty':  t => {
+    const i = state.cart[Number(t.dataset.i)]; if (!i) return;
+    i.qty += Number(t.dataset.d);
+    if (i.qty <= 0) state.cart.splice(Number(t.dataset.i), 1); else i.qty = Math.min(i.qty, 20);
+    save(); renderCart(); renderPromo();
+  },
+  'cart-remove': t => { state.cart.splice(Number(t.dataset.i), 1); save(); renderCart(); renderPromo(); },
+  'set-pay': t => { state.pay = t.dataset.id; save(); renderCart(); },
+  'add-bundle': () => {
+    BUNDLE.items.forEach(pid => { const p = PRODUCTS.find(x => x.id === pid); addItem(makeCartItem(p, { size: 'm', sweet: '25', boosters: [], note: '', qty: 1 })); });
+    toast(`${BUNDLE.name} ditambahkan — hemat ${rp(BUNDLE.off)}`);
+    if (!$('#cartDrawer').classList.contains('open')) openCart();
+  },
+  'claim': t => {
+    const v = VOUCHERS.find(x => x.id === t.dataset.id); if (!v) return;
+    if (v.memberOnly && state.userType !== 'member') return toast('Voucher ini khusus Member VIP. Ubah status di pojok kanan atas.', 'warn');
+    if (!state.claimed.includes(v.id)) state.claimed.push(v.id);
+    save(); renderPromo(); renderCart(); toast(`Voucher ${v.title} berhasil diklaim`);
+  },
+  'checkout': () => checkout(),
+  'use-reward': () => { state.useReward = true; save(); renderCart(); openCart(); },
+  'use-points': () => { state.usePoints = true; save(); renderLoyalty(); renderCart(); openCart(); },
+  'sim-stamp': () => {
+    const g = state.guest; if (g.stamps >= STAMP_GOAL) return toast('Stamp sudah penuh — pakai jus gratismu di checkout!', 'warn');
+    g.stamps++; save(); renderLoyalty(); toast(`Simulasi transaksi: stamp ${g.stamps}/${STAMP_GOAL}`);
+    if (g.stamps >= STAMP_GOAL) pushTicker('🎉 Seorang pelanggan baru saja melengkapi kartu stamp!');
+  },
+  // --- POS ---
+  'open-pos':  () => setView('pos'),
+  'close-pos': () => setView('shop'),
+  'pos-advance': t => { const o = state.orders.find(x => x.id === t.dataset.id); if (o) advanceOrder(o, true); },
+  'pos-validate': t => {
+    const o = state.orders.find(x => x.id === t.dataset.id); if (!o) return;
+    o.validated = true; save(); renderPOS();
+    toast(`${o.id}: ${o.loyalty.type === 'stamp' ? '+1 stamp' : '+' + o.loyalty.amount + ' poin'} tervalidasi untuk ${o.customer.name}`);
+  },
+  'pos-label': t => openLabels(t.dataset.id),
+  'close-label': () => closeLabels(),
+  'print-label': t => printLabels(t.dataset.id),
+  'pos-sim-order': () => createSimOrder(),
+  'pos-auto': () => { state.autoSim = !state.autoSim; save(); renderPOS(); }
+};
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-action]');
+  if (!t) { const ov = e.target; if (ov.id === 'productModal') closeProduct(); if (ov.id === 'labelModal') closeLabels(); return; }
+  const fn = actions[t.dataset.action]; if (fn) fn(t, e);
+});
+document.addEventListener('submit', e => {
+  const f = e.target.closest('[data-form]'); if (!f) return;
+  e.preventDefault();
+  if (f.dataset.form === 'claim-code') {
+    const code = ($('#codeInput').value || '').trim().toUpperCase();
+    const v = VOUCHERS.find(x => x.id === code);
+    if (!v) return toast('Kode voucher tidak ditemukan. Coba FRESH10, HEMAT15, ONGKIR, atau VIP20.', 'warn');
+    actions.claim({ dataset: { id: v.id } });
+    $('#codeInput').value = '';
+  }
+});
+function setPath(obj, path, val) { const k = path.split('.'); let o = obj; for (let i = 0; i < k.length - 1; i++) o = o[k[i]]; o[k[k.length - 1]] = val; }
+document.addEventListener('input', e => {
+  const t = e.target;
+  if (t.dataset && t.dataset.bind) { setPath(state, t.dataset.bind, t.value); save(); }
+  if (t.id === 'pNote' && ui.modal) ui.modal.note = t.value;
+});
+const changes = {
+  'zone': t => { state.zone = t.value; save(); updateShipUI(); renderCart(); },
+  'voucher-choice': t => { state.voucherChoice = t.value; save(); renderCart(); },
+  'toggle-reward': t => { state.useReward = t.checked; save(); renderCart(); renderLoyalty(); },
+  'toggle-points': t => { state.usePoints = t.checked; save(); renderCart(); renderLoyalty(); }
+};
+document.addEventListener('change', e => { const t = e.target.closest('[data-change]'); if (t && changes[t.dataset.change]) changes[t.dataset.change](t); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeProduct(); closeCart(); closeLabels(); }
+});
+
+/* =====================================================================
+   17. LOOP REAL-TIME
+   ===================================================================== */
+function tick() {
+  renderStoreStatus();
+  const fc = $('#flashCountdown'); if (fc) fc.textContent = flashRemaining();
+  // auto-simulasi progres dapur
+  if (state.autoSim) {
+    const now = Date.now();
+    state.orders.forEach(o => { if (o.status < 3 && now - o.updatedAt > STEP_MS) advanceOrder(o, false); });
+  }
+  $$('[data-since]').forEach(e => { e.textContent = since(Number(e.dataset.since)); });
+  // ticker simulasi
+  if (++ui.simCounter >= ui.simNext) { ui.simCounter = 0; ui.simNext = rand(9, 15); pushTicker(randomEvent()); }
+}
+
+/* =====================================================================
+   18. INIT
+   ===================================================================== */
+function init() {
+  $$('[data-ic]').forEach(el => { el.outerHTML = ic(el.dataset.ic, el.dataset.cls || 'w-5 h-5'); });
+  renderHero(); renderAll(); showTicker(true);
+  setInterval(tick, 1000);
+  setInterval(rotateTicker, 4800);
+}
+init();
+})();
+</script>
+</body>
+</html>
